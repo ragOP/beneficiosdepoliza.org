@@ -4,44 +4,35 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <title>Click Venture — Digital Marketing Experts</title>
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/62fbc0200a.js" crossorigin="anonymous"></script>
 
     <style>
-      /* =========================
-        PURE WHITE MODE (FULL CSS)
-        ✅ Mobile responsive images (no zoomed pics)
-        ✅ Removes square/boxed frame around snapshot images
-        ✅ Keeps page background pure white
-      ========================= */
+      /* =========================================================
+        PURE WHITE MODE — FULL PAGE (NO GREY BANDS)
+        ✅ Mobile looks same as before
+        ✅ Desktop FIX: Snapshot images NEVER cut (object-fit: contain)
+        ✅ Snapshot media has NO square bordered frame
+        ✅ Includes missing sections: Process Timeline, Testimonials, Contact Form
+      ========================================================= */
 
       :root {
         --brand: #007bff;
 
-        --brand-4: rgba(0, 123, 255, 0.04);
-        --brand-6: rgba(0, 123, 255, 0.06);
-        --brand-8: rgba(0, 123, 255, 0.08);
-        --brand-12: rgba(0, 123, 255, 0.12);
-        --brand-16: rgba(0, 123, 255, 0.16);
-        --brand-22: rgba(0, 123, 255, 0.22);
-        --brand-28: rgba(0, 123, 255, 0.28);
-        --brand-35: rgba(0, 123, 255, 0.35);
-
-        --ink: #1f2937;
-        --ink-soft: #475569;
+        --ink: #0f172a;
+        --ink-soft: #334155;
+        --muted: #64748b;
 
         --bg: #ffffff;
         --surface: #ffffff;
+        --line: rgba(0, 0, 0, 0.08);
 
-        --muted: #64748b;
         --radius-xl: 28px;
         --radius: 16px;
-        --blur: 16px;
 
-        --shadow-lg: 0 12px 34px rgba(0, 0, 0, 0.08);
-        --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.06);
-
-        --speed: 28s;
+        --shadow-lg: 0 18px 60px rgba(15, 23, 42, 0.12);
+        --shadow-sm: 0 12px 34px rgba(15, 23, 42, 0.08);
       }
 
       *,
@@ -56,15 +47,13 @@
       body {
         margin: 0;
         font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        background: #fff !important;
         color: var(--ink);
-        background: #ffffff !important;
         overflow-x: hidden;
       }
 
-      /* Kill any page background art */
-      .bg-wrap {
-        display: none !important;
-      }
+      /* kill any accidental background layers */
+      .bg-wrap,
       .blob {
         display: none !important;
       }
@@ -74,50 +63,48 @@
         margin: 0 auto;
       }
 
-      /* Header */
+      /* ---------------- Header ---------------- */
       .header {
         position: sticky;
         top: 0;
-        z-index: 20;
-        backdrop-filter: none !important;
-        background: #ffffff !important;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        z-index: 50;
+        background: #fff !important;
+        border-bottom: 1px solid var(--line);
       }
       .nav {
         display: flex;
-        gap: 28px;
         align-items: center;
         justify-content: space-between;
+        gap: 18px;
         padding: 14px 0;
       }
       .brand {
         display: flex;
         align-items: center;
         gap: 12px;
-        letter-spacing: 0.2px;
-        font-weight: 800;
+        font-weight: 900;
         color: var(--brand);
+        letter-spacing: 0.2px;
+        min-width: 180px;
       }
       .brand img {
         height: 28px;
         width: auto;
-      }
-      @media (max-width: 640px) {
-        .brand img {
-          height: 24px;
-        }
+        display: block;
       }
 
       .nav-links {
         display: flex;
-        gap: 28px;
+        gap: 22px;
         align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-end;
       }
       .nav-links a {
         color: var(--ink);
         text-decoration: none;
-        font-weight: 700;
-        opacity: 0.9;
+        font-weight: 800;
+        opacity: 0.92;
         position: relative;
         padding-bottom: 2px;
       }
@@ -139,12 +126,12 @@
         width: 100%;
       }
 
-      /* Scroll progress bar */
+      /* ---------------- Scroll Progress Bar ---------------- */
       .scroll-bar {
         position: fixed;
         inset: 0 0 auto 0;
         height: 3px;
-        z-index: 30;
+        z-index: 60;
         pointer-events: none;
         background: transparent;
       }
@@ -158,13 +145,14 @@
         border-radius: 0 999px 999px 0;
       }
 
-      /* Floating scroll “tour” indicator */
+      /* ---------------- Floating “Now viewing” pill ---------------- */
       .tour-indicator {
         position: fixed;
         right: 24px;
         top: 50%;
         transform: translateY(-50%) translateX(40px);
-        z-index: 25;
+        z-index: 55;
+
         padding: 8px 14px;
         border-radius: 999px;
         display: flex;
@@ -174,7 +162,6 @@
         background: rgba(15, 23, 42, 0.92);
         color: #e5e7eb;
 
-        backdrop-filter: blur(18px) saturate(1.4);
         box-shadow: 0 18px 60px rgba(15, 23, 42, 0.45);
         opacity: 0;
         pointer-events: none;
@@ -229,7 +216,7 @@
       }
       .tour-indicator-title {
         font-size: 0.85rem;
-        font-weight: 700;
+        font-weight: 800;
       }
       @media (max-width: 720px) {
         .tour-indicator {
@@ -237,25 +224,17 @@
         }
       }
 
-      /* Hero */
+      /* ---------------- Hero ---------------- */
       .hero {
-        position: relative;
-        padding: 88px 0 64px;
-        overflow: hidden;
-        background: #ffffff !important;
+        padding: 88px 0 56px;
+        background: #fff !important;
       }
       .hero-surface {
-        position: relative;
         border-radius: 32px;
         padding: 64px;
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: none !important;
-        isolation: isolate;
+        background: #fff !important;
+        border: 1px solid var(--line);
         transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.25, 1), border-color 0.35s ease;
-      }
-      .hero-surface::after {
-        content: none !important;
       }
       .hero:hover .hero-surface,
       .hero.is-active-tour .hero-surface {
@@ -284,7 +263,7 @@
         }
       }
       .hero p {
-        max-width: 680px;
+        max-width: 720px;
         color: var(--ink-soft);
         font-size: 18px;
         margin: 18px 0 28px;
@@ -295,7 +274,7 @@
         appearance: none;
         border: none;
         cursor: pointer;
-        font-weight: 800;
+        font-weight: 900;
         padding: 14px 22px;
         border-radius: 14px;
         color: #fff;
@@ -307,6 +286,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        text-decoration: none;
       }
       .btn::before {
         content: "";
@@ -334,20 +314,22 @@
         filter: saturate(1.1);
       }
 
-      /* Sections */
+      /* ---------------- Sections base ---------------- */
       .section {
-        margin: 48px 0;
-        background: #ffffff !important;
+        margin: 52px 0;
+        background: #fff !important;
       }
       .section h2 {
         font-size: clamp(26px, 3.2vw, 40px);
         margin: 0 0 12px;
         color: var(--brand);
+        letter-spacing: -0.02em;
       }
       .lead {
         color: var(--ink-soft);
       }
 
+      /* ---------------- Cards grid ---------------- */
       .grid {
         display: grid;
         gap: 22px;
@@ -365,185 +347,81 @@
       }
 
       .card {
-        position: relative;
         border-radius: 18px;
         padding: 24px;
-        background: #ffffff !important;
+        background: #fff !important;
+        border: 1px solid var(--line);
         box-shadow: var(--shadow-sm);
-        overflow: hidden;
-        isolation: isolate;
-        border: 1px solid rgba(0, 0, 0, 0.08);
         transition: transform 0.25s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.25s cubic-bezier(0.22, 0.8, 0.25, 1),
           border-color 0.25s ease, filter 0.25s ease;
-      }
-      .card::before {
-        content: none !important;
       }
       .card:hover {
         transform: translateY(-6px) scale(1.01);
         border-color: rgba(0, 123, 255, 0.35);
         box-shadow: 0 18px 46px rgba(15, 23, 42, 0.14);
-        filter: saturate(1.02);
       }
       .card h3 {
         margin: 6px 0 8px;
         color: var(--ink);
+        letter-spacing: -0.01em;
       }
       .card p {
+        margin: 0;
         color: var(--ink-soft);
       }
 
-      /* badges */
-      .badges {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-        margin-top: 12px;
-      }
-      .badge {
-        padding: 6px 10px;
+      /* ---------------- Metric strip ---------------- */
+      .metric-strip {
+        margin: 44px 0;
         border-radius: 999px;
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        font-weight: 700;
-        font-size: 0.8rem;
-        color: var(--ink);
-      }
-
-      /* CTA band */
-      .cta {
-        margin: 40px 0;
-        border-radius: 20px;
-        padding: 28px 24px;
-        background: #ffffff !important;
-        color: var(--ink);
+        padding: 12px 18px;
+        background: #fff !important;
+        border: 1px solid var(--line);
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
         display: flex;
-        gap: 18px;
         align-items: center;
         justify-content: space-between;
+        gap: 18px;
         flex-wrap: wrap;
-        box-shadow: var(--shadow-sm);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        transition: transform 0.3s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.22, 0.8, 0.25, 1);
-        position: relative;
         overflow: hidden;
       }
-      .cta::before {
-        content: none !important;
-      }
-      .cta:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
-      }
-
-      /* Footer */
-      .footer {
-        margin: 40px 0 60px;
-        padding: 20px 18px;
-        border-radius: 16px;
-        color: var(--ink-soft);
+      .metric-pill {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        background: #ffffff !important;
-        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
-        transition: box-shadow 0.25s ease, transform 0.25s ease;
-      }
-      .footer:hover {
-        box-shadow: 0 12px 34px rgba(15, 23, 42, 0.12);
-        transform: translateY(-2px);
-      }
-      .footer a {
-        color: var(--brand);
-        text-decoration: none;
-        font-weight: 700;
-      }
-
-      /* reveal */
-      .reveal {
-        opacity: 0;
-        transform: translateY(40px) scale(0.98);
-        filter: blur(10px);
-      }
-      .reveal.show {
-        animation: revealUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-      }
-      @keyframes revealUp {
-        0% {
-          opacity: 0;
-          transform: translateY(40px) scale(0.98);
-          filter: blur(10px);
-        }
-        60% {
-          opacity: 1;
-          transform: translateY(-2px) scale(1.01);
-          filter: blur(0);
-        }
-        100% {
-          opacity: 1;
-          transform: translateY(0) scale(1);
-          filter: blur(0);
-        }
-      }
-
-      /* tour-active */
-      [data-tour].is-active-tour::before {
-        content: none !important;
-      }
-      [data-tour].is-active-tour .hero-surface,
-      [data-tour].is-active-tour .focus-surface,
-      [data-tour].is-active-tour .snaps-shell,
-      [data-tour].is-active-tour .vertical-band,
-      [data-tour].is-active-tour .timeline,
-      [data-tour].is-active-tour .faq,
-      [data-tour].is-active-tour .cta {
-        transform: translateY(-2px);
-        box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
-        filter: none;
-      }
-
-      /* utility */
-      .m0 {
-        margin: 0;
-      }
-      .mt8 {
-        margin-top: 8px;
-      }
-      .mt16 {
-        margin-top: 16px;
-      }
-      .mt24 {
-        margin-top: 24px;
-      }
-      .small {
-        opacity: 0.95;
+        gap: 10px;
         font-size: 0.95rem;
         color: var(--ink-soft);
+        font-weight: 700;
+      }
+      .metric-pill b {
+        font-size: 1.2rem;
+        color: var(--ink);
+        font-weight: 900;
+      }
+      .metric-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: var(--brand);
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12);
+      }
+      @media (max-width: 640px) {
+        .metric-strip {
+          border-radius: 20px;
+          padding: 12px 14px;
+        }
       }
 
-      /* ---------- “Our Focus” ---------- */
-      .focus {
-        position: relative;
-        overflow: hidden;
-        border-radius: 24px;
-        padding: 0;
-        background: #ffffff !important;
-      }
+      /* ---------------- Focus (Our Focus) ---------------- */
       .focus-surface {
-        position: relative;
         display: grid;
         grid-template-columns: 1.2fr 1fr;
         gap: 28px;
         padding: 40px;
         border-radius: 24px;
-
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff !important;
+        border: 1px solid var(--line);
         box-shadow: var(--shadow-lg);
-
         transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.35s ease;
       }
       @media (max-width: 980px) {
@@ -560,8 +438,9 @@
         color: var(--brand);
       }
       .focus-sub {
-        max-width: 54ch;
+        max-width: 60ch;
         color: var(--ink-soft);
+        margin: 0;
       }
       .pill-row {
         display: flex;
@@ -575,20 +454,18 @@
         gap: 8px;
         padding: 8px 12px;
         border-radius: 999px;
-        font-weight: 800;
+        font-weight: 900;
         font-size: 0.82rem;
-
-        background: #ffffff !important;
+        background: #fff !important;
         color: var(--ink);
-        border: 1px solid rgba(0, 0, 0, 0.08);
-
+        border: 1px solid var(--line);
         box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
-        backdrop-filter: none !important;
       }
       .pill svg {
         width: 14px;
         height: 14px;
       }
+
       .steps {
         display: grid;
         gap: 12px;
@@ -601,8 +478,8 @@
         align-items: start;
         padding: 12px;
         border-radius: 14px;
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff !important;
+        border: 1px solid var(--line);
         transition: transform 0.25s ease, box-shadow 0.25s ease;
       }
       .step:hover {
@@ -619,19 +496,15 @@
         background: linear-gradient(180deg, #3f95ff, var(--brand));
         color: #fff;
       }
+
       .metrics {
-        position: relative;
         min-height: 340px;
         border-radius: 20px;
         padding: 22px;
-
-        background: #ffffff !important;
+        background: #fff !important;
         color: var(--ink);
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        border: 1px solid var(--line);
         box-shadow: var(--shadow-sm);
-
-        overflow: hidden;
-        backdrop-filter: none !important;
         transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.35s ease;
       }
       .metrics:hover {
@@ -642,6 +515,7 @@
         margin: 0 0 14px;
         font-weight: 900;
         color: var(--brand);
+        letter-spacing: -0.02em;
       }
       .metric-grid {
         display: grid;
@@ -651,79 +525,52 @@
       .kpi {
         border-radius: 14px;
         padding: 14px;
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff !important;
+        border: 1px solid var(--line);
         transition: transform 0.25s ease, box-shadow 0.25s ease;
       }
       .kpi b {
         display: block;
         font-size: 1.35rem;
         color: var(--ink);
+        font-weight: 900;
       }
       .kpi small {
-        opacity: 0.9;
         color: var(--ink-soft);
+        font-weight: 700;
       }
       .kpi:hover {
         transform: translateY(-3px);
         box-shadow: 0 10px 26px rgba(15, 23, 42, 0.1);
       }
-      .orbit {
-        display: none !important;
-      }
 
-      /* ---------- PERFORMANCE SNAPSHOTS ---------- */
-      .snaps {
-        margin: 32px 0 56px;
-        background: #ffffff !important;
-      }
-      .snap-headline {
-        font-size: clamp(28px, 3.3vw, 40px);
-        font-weight: 900;
-        letter-spacing: -0.02em;
-        color: var(--brand);
-        margin: 0 0 6px;
-      }
-      .snap-sub {
-        margin: 0 0 22px;
-        max-width: 620px;
-        font-size: 0.98rem;
-        color: var(--ink-soft);
-      }
+      /* ---------------- PERFORMANCE SNAPSHOTS ---------------- */
       .snaps-shell {
         display: flex;
         flex-direction: column;
         gap: 22px;
-        transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.35s ease;
       }
 
       .snap-row {
-        position: relative;
         display: flex;
         align-items: stretch;
         gap: 22px;
         padding: 22px;
         border-radius: 26px;
-
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-
+        background: #fff !important;
+        border: 1px solid var(--line);
         box-shadow: var(--shadow-sm);
-        overflow: hidden;
         transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.35s ease;
       }
-      .snap-row::before {
-        content: none !important;
+      .snap-row:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
       }
       .snap-row--reverse .snap-copy {
         order: 2;
       }
       .snap-row--reverse .snap-media {
         order: 1;
-      }
-      .snap-row:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
       }
 
       .snap-copy {
@@ -736,7 +583,7 @@
       }
       .snap-kicker {
         font-size: 0.78rem;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: 0.16em;
         text-transform: uppercase;
         color: var(--brand);
@@ -744,13 +591,15 @@
       }
       .snap-title {
         font-size: 1.15rem;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: -0.02em;
         color: var(--ink);
       }
       .snap-body {
         font-size: 0.95rem;
         color: var(--ink-soft);
+        margin: 0;
+        line-height: 1.55;
       }
       .snap-metrics {
         margin-top: 10px;
@@ -762,14 +611,17 @@
         padding: 6px 10px;
         border-radius: 999px;
         font-size: 0.78rem;
-        font-weight: 700;
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        font-weight: 900;
+        background: #fff !important;
+        border: 1px solid var(--line);
         color: var(--ink);
         box-shadow: 0 6px 18px rgba(15, 23, 42, 0.04);
       }
 
-      /* ✅ FIX: Snapshot media should NOT look like a framed card on mobile/desktop */
+      /* ✅ IMPORTANT FIX (Desktop + Mobile):
+         - NO borders/frames on image container
+         - NO cutting: object-fit: contain on ALL sizes
+         - aspect-ratio keeps stable box without cropping */
       .snap-media {
         flex: 1;
         min-width: 0;
@@ -777,35 +629,27 @@
         border-radius: 18px;
         overflow: hidden;
 
-        /* remove “square bordered frame” look */
         background: transparent !important;
         box-shadow: none !important;
         border: none !important;
 
-        /* stable height so it doesn't jump */
-        height: clamp(220px, 24vw, 320px);
-
+        aspect-ratio: 16 / 9;
+        height: auto; /* let aspect-ratio drive height */
         display: flex;
         align-items: center;
         justify-content: center;
-      }
-      .snap-media::after {
-        content: none !important; /* remove glow overlay */
       }
       .snap-img-main {
         display: block;
         width: 100%;
         height: 100%;
-
-        /* ✅ Default: fill nicely without huge white borders */
-        object-fit: cover;
+        object-fit: contain; /* ✅ never cut */
         object-position: center;
-
-        /* ✅ IMPORTANT: remove your previous transform zoom */
         transform: none !important;
+        background: transparent;
       }
 
-      /* ✅ On mobile: make sure image is NOT zoomed/cropped weird */
+      /* on smaller screens, stack layout and keep full image visible */
       @media (max-width: 900px) {
         .snap-row {
           flex-direction: column;
@@ -817,33 +661,21 @@
         .snap-row--reverse .snap-media {
           order: 2;
         }
-
         .snap-media {
-          height: 240px;
+          aspect-ratio: 16 / 10;
           border-radius: 16px;
         }
-        .snap-img-main {
-          object-fit: contain; /* mobile = show full image (no zoom) */
-          background: transparent;
-        }
       }
 
-      @media (max-width: 420px) {
-        .snap-media {
-          height: 210px;
-        }
-      }
-
-      /* banner (intentionally dark media) */
+      /* ---------------- Banner (dark) ---------------- */
       .snap-banner {
-        position: relative;
         margin-top: 4px;
         border-radius: 26px;
         overflow: hidden;
         min-height: 210px;
-        height: auto;
         background: #020617;
         box-shadow: 0 18px 46px rgba(15, 23, 42, 0.22);
+        position: relative;
         transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.35s ease, filter 0.35s ease;
       }
       .snap-banner:hover {
@@ -885,12 +717,12 @@
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.18em;
-        font-weight: 700;
+        font-weight: 800;
         opacity: 0.82;
       }
       .snap-banner-title {
         font-size: 1.15rem;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: -0.02em;
       }
       .snap-banner-body {
@@ -909,7 +741,7 @@
         border-radius: 999px;
         border: 1px solid rgba(226, 232, 240, 0.5);
         font-size: 0.78rem;
-        font-weight: 700;
+        font-weight: 800;
         backdrop-filter: blur(8px);
       }
       .snap-banner-stat {
@@ -921,8 +753,8 @@
         display: block;
         font-size: 1.25rem;
         color: #facc15;
+        font-weight: 900;
       }
-
       @media (max-width: 900px) {
         .snap-banner-inner {
           flex-direction: column;
@@ -934,88 +766,14 @@
           text-align: left;
         }
       }
-      @media (max-width: 540px) {
-        .snap-row {
-          border-radius: 22px;
-        }
-        .snap-banner {
-          border-radius: 22px;
-        }
-        .snap-banner-title {
-          font-size: 1.05rem;
-        }
-        .snap-banner-body {
-          font-size: 0.88rem;
-        }
-      }
 
-      /* Metric strip */
-      .metric-strip {
-        margin: 40px 0;
-        border-radius: 999px;
-        padding: 10px 18px;
-
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.06);
-
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 18px;
-        flex-wrap: wrap;
-        backdrop-filter: none !important;
-
-        position: relative;
-        overflow: hidden;
-      }
-      .metric-strip::before {
-        content: none !important;
-      }
-      .metric-pill {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        font-size: 0.9rem;
-        color: var(--ink-soft);
-      }
-      .metric-pill b {
-        font-size: 1.2rem;
-        color: var(--ink);
-      }
-      .metric-dot {
-        width: 8px;
-        height: 8px;
-        border-radius: 999px;
-        background: var(--brand);
-        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12);
-      }
-      @media (max-width: 640px) {
-        .metric-strip {
-          border-radius: 20px;
-          padding: 12px 14px;
-        }
-      }
-
-      /* Products */
-      .products {
-        position: relative;
-        overflow: hidden;
-        background: #ffffff !important;
-      }
-      .prod-head {
+      /* ---------------- Products ---------------- */
+      .products .prod-head {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 14px;
-      }
-      .prod-title {
-        margin: 0;
-        font-size: clamp(26px, 3.2vw, 40px);
-        font-weight: 900;
-        letter-spacing: -0.02em;
-        color: var(--brand);
       }
       .prod-chips {
         display: flex;
@@ -1027,14 +785,13 @@
         cursor: pointer;
         padding: 8px 12px;
         border-radius: 999px;
-        font-weight: 800;
+        font-weight: 900;
         font-size: 0.85rem;
         color: var(--ink);
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff !important;
+        border: 1px solid var(--line);
         transition: 0.25s;
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-        backdrop-filter: none !important;
       }
       .chip:hover {
         transform: translateY(-1px);
@@ -1067,18 +824,15 @@
       }
 
       .prod {
-        position: relative;
         border-radius: 18px;
         padding: 22px;
-        color: var(--ink);
-
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff !important;
+        border: 1px solid var(--line);
         box-shadow: var(--shadow-sm);
-
         transform-style: preserve-3d;
         transition: transform 0.25s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.25s ease, filter 0.25s ease;
         overflow: hidden;
+        position: relative;
       }
       .prod[data-tilt="1"]:hover {
         transform: perspective(800px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-4px);
@@ -1089,9 +843,10 @@
         position: absolute;
         inset: 0;
         border-radius: inherit;
-        background: radial-gradient(600px 200px at var(--mx, 0%) var(--my, 0%), rgba(0, 123, 255, 0.12), transparent 60%);
+        background: radial-gradient(600px 200px at var(--mx, 50%) var(--my, 50%), rgba(0, 123, 255, 0.12), transparent 60%);
         opacity: 0;
         transition: opacity 0.25s;
+        pointer-events: none;
       }
       .prod:hover .shine {
         opacity: 1;
@@ -1100,10 +855,16 @@
         margin: 0 0 6px;
         font-size: 1.15rem;
         color: var(--ink);
+        letter-spacing: -0.01em;
       }
       .prod p {
         margin: 6px 0 12px;
         color: var(--ink-soft);
+      }
+      .sep {
+        height: 1px;
+        background: var(--line);
+        margin: 12px 0;
       }
       .prod-tags {
         display: flex;
@@ -1112,11 +873,11 @@
       }
       .t {
         font-size: 0.74rem;
-        font-weight: 800;
+        font-weight: 900;
         padding: 6px 10px;
         border-radius: 999px;
-        border: 1px solid rgba(0, 0, 0, 0.08);
-        background: #ffffff !important;
+        border: 1px solid var(--line);
+        background: #fff !important;
         color: var(--ink);
       }
       .t.dark {
@@ -1124,32 +885,126 @@
         color: #fff;
         border-color: var(--brand);
       }
-
-      .sep {
-        height: 1px;
-        background: rgba(0, 0, 0, 0.08);
-        opacity: 1;
-        margin: 12px 0;
-      }
       [hidden] {
         display: none !important;
       }
 
-      /* FAQ */
+      /* ---------------- Timeline (NEW) ---------------- */
+      .timeline {
+        border-radius: 24px;
+        padding: 26px 22px;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-sm);
+        background: #fff !important;
+      }
+      .timeline-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 14px;
+        margin-top: 14px;
+      }
+      @media (max-width: 980px) {
+        .timeline-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .tl {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px;
+        background: #fff !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .tl:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
+      }
+      .tl-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+      .tl-badge {
+        font-weight: 900;
+        font-size: 0.78rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .tl-days {
+        font-weight: 900;
+        color: var(--ink);
+        opacity: 0.9;
+        font-size: 0.9rem;
+      }
+      .tl h3 {
+        margin: 10px 0 6px;
+        letter-spacing: -0.01em;
+      }
+      .tl p {
+        margin: 0;
+        color: var(--ink-soft);
+      }
+
+      /* ---------------- Testimonials (NEW) ---------------- */
+      .testimonials {
+        border-radius: 24px;
+        padding: 26px 22px;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-sm);
+        background: #fff !important;
+      }
+      .quote-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 14px;
+      }
+      @media (max-width: 980px) {
+        .quote-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .q {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px;
+        background: #fff !important;
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+      }
+      .q:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
+      }
+      .q p {
+        margin: 0;
+        color: var(--ink-soft);
+        line-height: 1.55;
+        font-weight: 600;
+      }
+      .q .by {
+        margin-top: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        color: var(--muted);
+        font-weight: 800;
+        font-size: 0.9rem;
+      }
+      .q .stars {
+        color: var(--brand);
+        letter-spacing: 2px;
+      }
+
+      /* ---------------- FAQ ---------------- */
       .faq {
-        margin: 32px 0 40px;
         border-radius: 24px;
         padding: 24px 20px;
-
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff !important;
+        border: 1px solid var(--line);
         box-shadow: var(--shadow-sm);
-
-        position: relative;
-        overflow: hidden;
-      }
-      .faq::before {
-        content: none !important;
       }
       .faq-head {
         display: flex;
@@ -1160,26 +1015,25 @@
       }
       .faq-title {
         font-size: 1.2rem;
-        font-weight: 800;
+        font-weight: 900;
         letter-spacing: -0.02em;
         color: var(--ink);
       }
       .faq-sub {
         font-size: 0.9rem;
         color: var(--ink-soft);
+        font-weight: 700;
+        margin: 0;
       }
       .faq-list {
         margin-top: 16px;
         border-radius: 18px;
-        background: #ffffff !important;
-        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff !important;
+        border: 1px solid var(--line);
         overflow: hidden;
-        backdrop-filter: none !important;
-        position: relative;
-        z-index: 2;
       }
       .faq-item + .faq-item {
-        border-top: 1px solid rgba(0, 0, 0, 0.08);
+        border-top: 1px solid var(--line);
       }
       .faq-item button {
         width: 100%;
@@ -1195,13 +1049,13 @@
         cursor: pointer;
       }
       .faq-q {
-        font-size: 0.9rem;
-        font-weight: 700;
+        font-size: 0.92rem;
+        font-weight: 900;
         color: var(--ink);
       }
       .faq-toggle {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         border-radius: 999px;
         border: 1px solid rgba(0, 0, 0, 0.1);
         display: flex;
@@ -1209,13 +1063,16 @@
         justify-content: center;
         font-size: 12px;
         color: var(--brand);
-        background: #ffffff !important;
+        background: #fff !important;
+        font-weight: 900;
       }
       .faq-a {
         padding: 0 16px 14px;
-        font-size: 0.85rem;
+        font-size: 0.88rem;
         color: var(--ink-soft);
         display: none;
+        font-weight: 650;
+        line-height: 1.5;
       }
       .faq-item.is-open .faq-a {
         display: block;
@@ -1226,7 +1083,150 @@
         border-color: var(--brand);
       }
 
-      /* Responsive tuning */
+      /* ---------------- CTA band ---------------- */
+      .cta {
+        margin: 44px 0 10px;
+        border-radius: 20px;
+        padding: 28px 24px;
+        background: #fff !important;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-sm);
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        transition: transform 0.3s cubic-bezier(0.22, 0.8, 0.25, 1), box-shadow 0.3s cubic-bezier(0.22, 0.8, 0.25, 1);
+      }
+      .cta:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
+      }
+
+      /* ---------------- Contact (NEW) ---------------- */
+      .contact {
+        border-radius: 24px;
+        padding: 26px 22px;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow-sm);
+        background: #fff !important;
+      }
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 16px;
+        margin-top: 14px;
+      }
+      @media (max-width: 980px) {
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      .contact-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 16px;
+        background: #fff !important;
+      }
+      .contact-card h3 {
+        margin: 0 0 8px;
+        letter-spacing: -0.01em;
+      }
+      .contact-card p {
+        margin: 0;
+        color: var(--ink-soft);
+        font-weight: 650;
+        line-height: 1.55;
+      }
+      .form {
+        display: grid;
+        gap: 10px;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      @media (max-width: 520px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 12px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: #fff;
+        font: inherit;
+        outline: none;
+        transition: box-shadow 0.2s ease, border-color 0.2s ease;
+      }
+      textarea {
+        min-height: 110px;
+        resize: vertical;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: rgba(0, 123, 255, 0.45);
+        box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.12);
+      }
+
+      /* ---------------- Footer ---------------- */
+      .footer {
+        margin: 40px 0 60px;
+        padding: 20px 18px;
+        border-radius: 16px;
+        color: var(--ink-soft);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        border: 1px solid var(--line);
+        background: #fff !important;
+        box-shadow: 0 8px 22px rgba(0, 0, 0, 0.05);
+        transition: box-shadow 0.25s ease, transform 0.25s ease;
+      }
+      .footer:hover {
+        box-shadow: 0 12px 34px rgba(15, 23, 42, 0.12);
+        transform: translateY(-2px);
+      }
+      .footer a {
+        color: var(--brand);
+        text-decoration: none;
+        font-weight: 900;
+      }
+
+      /* ---------------- Reveal animations ---------------- */
+      .reveal {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+        filter: blur(10px);
+      }
+      .reveal.show {
+        animation: revealUp 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      }
+      @keyframes revealUp {
+        0% {
+          opacity: 0;
+          transform: translateY(40px) scale(0.98);
+          filter: blur(10px);
+        }
+        60% {
+          opacity: 1;
+          transform: translateY(-2px) scale(1.01);
+          filter: blur(0);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          filter: blur(0);
+        }
+      }
+
+      /* ---------------- Responsive ---------------- */
       @media (max-width: 980px) {
         .hero {
           padding: 72px 0 48px;
@@ -1240,11 +1240,13 @@
           flex-wrap: wrap;
           row-gap: 8px;
         }
+        .brand {
+          min-width: auto;
+        }
         .nav-links {
           width: 100%;
           justify-content: flex-end;
-          flex-wrap: wrap;
-          gap: 20px;
+          gap: 18px;
           font-size: 0.95rem;
         }
         .hero {
@@ -1267,7 +1269,7 @@
         }
         .nav-links {
           justify-content: flex-start;
-          gap: 16px;
+          gap: 14px;
         }
         .hero {
           padding: 56px 0 36px;
@@ -1277,55 +1279,72 @@
           border-radius: 24px;
         }
         .section {
-          margin: 36px 0;
+          margin: 40px 0;
         }
         .footer {
           margin: 32px 0 40px;
         }
       }
 
-      /* ICON / EMOJI CENTER FIX */
-      .card > img {
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        margin-bottom: 14px !important;
-      }
+      /* icon centering */
+      .card > img,
       .prod > img {
         display: block !important;
         margin-left: auto !important;
         margin-right: auto !important;
         margin-bottom: 12px !important;
-      }
-      .card > img,
-      .prod > img {
         object-fit: contain !important;
       }
-      .card img[alt="Icon"],
-      .prod img[alt="Icon"] {
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
+
+      /* tour highlight */
+      [data-tour].is-active-tour .hero-surface,
+      [data-tour].is-active-tour .snap-row,
+      [data-tour].is-active-tour .snap-banner,
+      [data-tour].is-active-tour .focus-surface,
+      [data-tour].is-active-tour .timeline,
+      [data-tour].is-active-tour .testimonials,
+      [data-tour].is-active-tour .faq,
+      [data-tour].is-active-tour .contact,
+      [data-tour].is-active-tour .cta {
+        transform: translateY(-2px);
+        box-shadow: 0 18px 48px rgba(15, 23, 42, 0.14);
+      }
+
+      /* utility */
+      .m0 {
+        margin: 0;
+      }
+      .mt8 {
+        margin-top: 8px;
+      }
+      .mt16 {
+        margin-top: 16px;
+      }
+      .mt24 {
+        margin-top: 24px;
+      }
+      .small {
+        opacity: 0.95;
+        font-size: 0.95rem;
+        color: var(--ink-soft);
+        font-weight: 700;
       }
     </style>
   </head>
 
   <body>
-    <div class="bg-wrap">
-      <div class="blob b1"></div>
-      <div class="blob b2"></div>
-      <div class="blob b3"></div>
-    </div>
-
     <header class="header">
       <div class="container nav">
         <div class="brand">
           <img src="https://clickkk-git-main-marketcall.vercel.app/images/biglogo.jpg" alt="Click Venture Logo" width="128" height="28" />
         </div>
+
         <nav class="nav-links">
+          <a href="#snapshots">Snapshots</a>
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#products">Products</a>
+          <a href="#process">Process</a>
           <a href="#contact">Contact</a>
         </nav>
       </div>
@@ -1347,31 +1366,27 @@
         <div class="hero-surface reveal show">
           <h1 class="shimmer m0">Digital Marketing<br />Experts</h1>
           <p class="mt16">
-            Paid • Creative • SEO • Email • CRO • Social • Branding — We accelerate and scale brands to new heights using our proprietary technology and
-            world-class marketing team.
+            Paid • Creative • SEO • Email • CRO • Social • Branding — We accelerate and scale brands using proprietary tooling and a performance-first team.
           </p>
-          <button class="btn" style="margin-top: 14px">Get Started</button>
+          <a class="btn" href="#contact" style="margin-top: 14px">Get Started</a>
         </div>
       </section>
 
       <!-- PERFORMANCE SNAPSHOTS -->
-      <section class="section snaps reveal" data-tour="2" data-tour-title="Performance views">
-        <h2 class="snap-headline">Performance Snapshots</h2>
-        <p class="snap-sub">
-          A live view into the command centers, charts, and attribution we monitor daily to keep campaigns scaling while protecting efficiency across
-          channels.
+      <section id="snapshots" class="section reveal" data-tour="2" data-tour-title="Performance views">
+        <h2 class="m0">Performance Snapshots</h2>
+        <p class="lead mt8" style="max-width: 70ch">
+          A live view into the command centers, charts, and attribution we monitor daily to keep campaigns scaling while protecting efficiency.
         </p>
 
-        <div class="snaps-shell">
+        <div class="snaps-shell mt16">
           <article class="snap-row">
             <div class="snap-copy">
               <div class="snap-kicker">Customer Relationship management</div>
               <div class="snap-title">Cross-channel control room for every dollar spent.</div>
               <p class="snap-body">
-           Our media team uses real-time dashboards that unify platform analytics, first-party data, and verified call results to track performance across all channels. Daily trend and pacing reviews allow us to proactively adjust budgets and optimize for maximum profit using data-driven decisions.
-                <br /><br />
-                <!-- Each morning begins with a detailed review of trends and pacing insights, allowing us to adjust budgets proactively and optimize for
-                maximum profit. This process ensures that every decision is data-driven and aligned with our goals. -->
+                Our media team uses real-time dashboards that unify platform analytics, first-party data, and verified call results to track performance across all channels.
+                Daily pacing reviews let us adjust budgets proactively and optimize for maximum profit.
               </p>
               <div class="snap-metrics">
                 <span class="snap-pill">Live pacing views</span>
@@ -1380,7 +1395,7 @@
               </div>
             </div>
 
-            <div class="snap-media">
+            <div class="snap-media" aria-label="Campaign overview image">
               <img class="snap-img-main" src="https://www.clickvs.com/images/lap.png" alt="Campaign overview dashboard" />
             </div>
           </article>
@@ -1390,10 +1405,8 @@
               <div class="snap-kicker">Analytics &amp; Iteration</div>
               <div class="snap-title">Channel-level performance and creative winners at a glance.</div>
               <p class="snap-body">
-             We evaluate performance across the full funnel to determine which offers, audiences, and creatives can scale and which need refinement. Data-driven insights help us quickly double down on what works, cut what doesn’t, and protect margins while scaling profitably.
-                <br /><br />
-                <!-- By using structured data to guide creative decisions, we quickly double down on what works, cut what doesn’t, and compound insights over
-                time—protecting margins while scaling profitably. -->
+                We evaluate performance across the full funnel to find which offers, audiences, and creatives can scale. Data-driven insights help us double down on what works,
+                cut what doesn’t, and protect margins while scaling profitably.
               </p>
               <div class="snap-metrics">
                 <span class="snap-pill">Channel breakdowns</span>
@@ -1401,7 +1414,8 @@
                 <span class="snap-pill">Automatic alerts</span>
               </div>
             </div>
-            <div class="snap-media">
+
+            <div class="snap-media" aria-label="Channel breakdown image">
               <img class="snap-img-main" src="https://www.clickvs.com/images/chart.png" alt="Channel breakdown chart" />
             </div>
           </article>
@@ -1411,10 +1425,8 @@
               <div class="snap-kicker">Measurement Lab</div>
               <div class="snap-title">Deeper attribution to keep CPL and CPA on target.</div>
               <p class="snap-body">
-               Behind these dashboards is an integrated measurement stack that connects every click, call, and revenue dollar, giving us clear visibility into performance across all touchpoints. This foundation allows us to expand into new markets, test new offers, and add languages while scaling aggressively and maintaining profitability.
-                <br /><br />
-                <!-- This foundation lets us expand into new markets, test new offers, and add languages without losing control, ensuring we scale
-                aggressively while maintaining profitability and strategic alignment. -->
+                Behind these dashboards is an integrated measurement stack that connects every click, call, and revenue dollar—giving clear visibility across all touchpoints.
+                This foundation lets us expand into new markets and test new offers while keeping profitability under control.
               </p>
               <div class="snap-metrics">
                 <span class="snap-pill">CPL / CPA scorecards</span>
@@ -1422,7 +1434,8 @@
                 <span class="snap-pill">Bid strategy feedback</span>
               </div>
             </div>
-            <div class="snap-media">
+
+            <div class="snap-media" aria-label="Measurement stack image">
               <img class="snap-img-main" src="https://www.clickvs.com/images/measure.png" alt="Measurement dashboard view" />
             </div>
           </article>
@@ -1434,8 +1447,7 @@
                 <div class="snap-banner-kicker">Real-world Reach</div>
                 <div class="snap-banner-title">From dashboards to real people in real markets.</div>
                 <p class="snap-banner-body">
-                  Our funnels are designed to perform in the wild — across major metros, suburban pockets, and niche zip codes — for both English and
-                  Spanish-speaking audiences.
+                  Our funnels are designed to perform in the wild — across major metros, suburban pockets, and niche zip codes — for both English and Spanish-speaking audiences.
                 </p>
                 <div class="snap-banner-pills">
                   <span class="snap-banner-pill">Major US metros</span>
@@ -1459,13 +1471,14 @@
         <div class="metric-pill"><span class="metric-dot"></span><span><b>15+</b> active verticals across insurance, legal, and finance</span></div>
       </section>
 
-      <section id="about" class="section focus reveal" data-tour="3" data-tour-title="Our focus">
+      <!-- ABOUT / FOCUS -->
+      <section id="about" class="section reveal" data-tour="3" data-tour-title="Our focus">
         <div class="focus-surface">
           <div>
             <h2 class="focus-title m0">Our Focus</h2>
             <p class="focus-sub mt8">
               We engineer the full journey — from the first impression to conversion — so every click feels intuitive and every handoff is seamless.
-              The result? Higher intent, cleaner calls, and compounding revenue lift.
+              The result: higher intent, cleaner calls, and compounding revenue lift.
             </p>
 
             <div class="pill-row">
@@ -1489,7 +1502,7 @@
               </span>
               <span class="pill">
                 <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M3 12a9 9 0 1115.5 6.36L21 21M8 9h8v6H8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  <path d="M3 12a9 9 0 1115.5 6.36L21 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
                 </svg>
                 Retention
               </span>
@@ -1498,21 +1511,20 @@
             <div class="steps">
               <div class="step">
                 <div class="dot">1</div>
-                <div>Optimize every touchpoint to reduce friction and increase intent.</div>
+                <div><b>Reduce friction.</b> Optimize every touchpoint so users move forward faster.</div>
               </div>
               <div class="step">
                 <div class="dot">2</div>
-                <div>Align media, creative, and CRO so traffic → qualified lead → inbound call.</div>
+                <div><b>Align teams.</b> Media + creative + CRO work as one system, not silos.</div>
               </div>
               <div class="step">
                 <div class="dot">3</div>
-                <div>Instrument the journey with custom trackers for daily KPI decisions.</div>
+                <div><b>Instrument outcomes.</b> Daily KPIs drive decisions and scaling.</div>
               </div>
             </div>
 
             <p class="mt16 small">
-              To optimize the user experience for all consumers engaging with our funnels, driving the highest-intent leads and inbound calls for each
-              of our promoted verticals ensuring a seamless flow from beginning to end.
+              We optimize the user experience for all consumers engaging with our funnels, driving the highest-intent leads and inbound calls for each vertical.
             </p>
           </div>
 
@@ -1521,16 +1533,20 @@
             <div class="metric-grid">
               <div class="kpi"><b>+38%</b><small>Lift in CVR after UX streamlining</small></div>
               <div class="kpi"><b>-27%</b><small>Lower CPA via creative iteration</small></div>
-              <div class="kpi"><b>~2.3×</b><small>ROAS improvement month-over-month</small></div>
+              <div class="kpi"><b>~2.3×</b><small>ROAS improvement MoM</small></div>
               <div class="kpi"><b>+19%</b><small>Increase in qualified call rate</small></div>
             </div>
-            <div class="orbit"></div>
           </aside>
         </div>
       </section>
 
-      <section id="services" class="section reveal" data-tour="5" data-tour-title="Growth framework">
+      <!-- SERVICES -->
+      <section id="services" class="section reveal" data-tour="4" data-tour-title="Services">
         <h2 class="m0">Integrated Growth Framework</h2>
+        <p class="lead mt8" style="max-width: 72ch">
+          End-to-end performance execution: strategy, media buying, creative testing, CRO, and reporting—tied together by measurement.
+        </p>
+
         <div class="grid mt16">
           <article class="card">
             <img
@@ -1542,17 +1558,11 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
-
             <h3 class="m0">Drive Impact with Integrated Strategy</h3>
             <p class="mt8">
-              Experience a seamless marketing process from planning to execution and analysis. Our integrative strategies ensure maximum growth
-              potential for your brand.
+              A seamless process from planning to execution and analysis. Every channel supports the same goal: profitable growth.
             </p>
           </article>
 
@@ -1566,14 +1576,10 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Scale Revenue with Precise Targeting</h3>
-            <p class="mt8">We prioritize audience targeting to provide the most qualified leads. This approach ensures low CPAs and maximizes revenue.</p>
+            <p class="mt8">We prioritize audience targeting to drive the most qualified leads while keeping CPAs low.</p>
           </article>
 
           <article class="card">
@@ -1586,28 +1592,26 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Measure Results with Custom Trackers</h3>
-            <p class="mt8">We monitor KPIs daily with custom performance trackers to ensure the highest-quality leads and calls, making adjustments as needed.</p>
+            <p class="mt8">Daily KPI monitoring + alerts so we can move fast and keep quality high.</p>
           </article>
         </div>
       </section>
 
-      <section id="products" class="section products reveal" data-tour="6" data-tour-title="Core products">
+      <!-- PRODUCTS -->
+      <section id="products" class="section products reveal" data-tour="5" data-tour-title="Products">
         <div class="prod-head">
-          <h2 class="prod-title">Our Core Products</h2>
+          <h2 class="m0">Our Core Products</h2>
+
           <div class="prod-chips" id="prodChips">
-            <button class="chip is-active" data-filter="all">All</button>
-            <button class="chip" data-filter="insurance">Insurance</button>
-            <button class="chip" data-filter="legal">Legal</button>
-            <button class="chip" data-filter="finance">Finance</button>
-            <button class="chip" data-filter="home">Home</button>
-            <button class="chip" data-filter="commerce">Commerce</button>
+            <button class="chip is-active" data-filter="all" type="button">All</button>
+            <button class="chip" data-filter="insurance" type="button">Insurance</button>
+            <button class="chip" data-filter="legal" type="button">Legal</button>
+            <button class="chip" data-filter="finance" type="button">Finance</button>
+            <button class="chip" data-filter="home" type="button">Home</button>
+            <button class="chip" data-filter="commerce" type="button">Commerce</button>
           </div>
         </div>
 
@@ -1623,10 +1627,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Medicare</h3>
@@ -1646,10 +1646,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Personal Injury</h3>
@@ -1669,10 +1665,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Final Expense</h3>
@@ -1692,10 +1684,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Home Services</h3>
@@ -1715,10 +1703,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Debt Settlement</h3>
@@ -1738,10 +1722,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Auto Insurance</h3>
@@ -1761,10 +1741,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Personal Loans</h3>
@@ -1784,10 +1760,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">Life Insurance</h3>
@@ -1807,10 +1779,6 @@
                 padding: 10px;
                 border-radius: 14px;
                 box-shadow: 0 10px 26px rgba(37, 99, 235, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                object-fit: contain;
               "
             />
             <h3 class="m0">E-commerce</h3>
@@ -1821,49 +1789,166 @@
         </div>
       </section>
 
-      <section class="faq reveal" data-tour="9" data-tour-title="FAQs">
-        <div class="faq-head">
-          <div class="faq-title">Questions teams usually ask us first</div>
-          <p class="faq-sub">A quick look at how we plug in, how fast we move, and what to expect in the first 90 days.</p>
-        </div>
-        <div class="faq-list" id="faqList">
-          <div class="faq-item">
-            <button type="button"><span class="faq-q">How quickly can you launch a new vertical or offer?</span><span class="faq-toggle">+</span></button>
-            <div class="faq-a">For most categories, we can move from alignment to first spend within 1–2 weeks, depending on compliance, routing, and creative approvals on your side.</div>
-          </div>
-          <div class="faq-item">
-            <button type="button"><span class="faq-q">Do you handle both lead forms and inbound calls?</span><span class="faq-toggle">+</span></button>
-            <div class="faq-a">Yes. We support lead-only and direct inbound structures. The optimization logic is tuned to your preferred economics.</div>
-          </div>
-          <div class="faq-item">
-            <button type="button"><span class="faq-q">How do you report performance back to us?</span><span class="faq-toggle">+</span></button>
-            <div class="faq-a">You get access to live dashboards plus a consistent cadence of summary reports and action plans so your internal team always knows what’s happening.</div>
-          </div>
-          <div class="faq-item">
-            <button type="button"><span class="faq-q">Can you work with our existing tracking and CRM setup?</span><span class="faq-toggle">+</span></button>
-            <div class="faq-a">We integrate with most leading CRMs, call tracking platforms, and analytics stacks. During onboarding, we map attribution and data flows so nothing breaks.</div>
+      <!-- PROCESS TIMELINE (NEW) -->
+      <section id="process" class="section reveal" data-tour="6" data-tour-title="Process">
+        <div class="timeline">
+          <h2 class="m0">How We Launch & Scale</h2>
+          <p class="lead mt8" style="max-width: 72ch">
+            A structured rollout that keeps quality tight while moving fast. This is how we avoid “random testing” and build compounding gains.
+          </p>
+
+          <div class="timeline-grid">
+            <div class="tl">
+              <div class="tl-top">
+                <span class="tl-badge">Phase 01</span>
+                <span class="tl-days">Days 1–7</span>
+              </div>
+              <h3 class="m0 mt8">Audit + Tracking Map</h3>
+              <p class="mt8">
+                Align KPIs, define success thresholds, connect analytics + call outcomes, and set performance guardrails.
+              </p>
+            </div>
+
+            <div class="tl">
+              <div class="tl-top">
+                <span class="tl-badge">Phase 02</span>
+                <span class="tl-days">Days 8–21</span>
+              </div>
+              <h3 class="m0 mt8">Creative System + CRO</h3>
+              <p class="mt8">
+                Rapid creative production + controlled tests. We improve conversion before increasing spend aggressively.
+              </p>
+            </div>
+
+            <div class="tl">
+              <div class="tl-top">
+                <span class="tl-badge">Phase 03</span>
+                <span class="tl-days">Day 22+</span>
+              </div>
+              <h3 class="m0 mt8">Scale With Protection</h3>
+              <p class="mt8">
+                Scale winning combinations, expand markets/languages, and keep CPL/CPA within target via daily monitoring.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section class="cta reveal" data-tour="10" data-tour-title="Next steps">
-        <h3 class="m0" style="font-size: clamp(18px, 2.4vw, 26px); font-weight: 900">Ready to talk?</h3>
-        <a href="#contact" class="btn" style="white-space: nowrap; text-decoration: none">Get In Touch</a>
+      <!-- TESTIMONIALS (NEW) -->
+      <section class="section reveal" data-tour="7" data-tour-title="Proof">
+        <div class="testimonials">
+          <h2 class="m0">What Partners Notice Fast</h2>
+          <p class="lead mt8" style="max-width: 72ch">
+            Teams work with us because execution is clean, reporting is clear, and performance improves without chaos.
+          </p>
+
+          <div class="quote-grid">
+            <div class="q">
+              <p>“The biggest difference is the daily clarity — we always know what’s working and why.”</p>
+              <div class="by"><span>Performance Lead</span><span class="stars">★★★★★</span></div>
+            </div>
+            <div class="q">
+              <p>“Creative iteration is fast, but never sloppy. Every test has a reason.”</p>
+              <div class="by"><span>Growth Manager</span><span class="stars">★★★★★</span></div>
+            </div>
+            <div class="q">
+              <p>“They scale with guardrails. CPL stays protected while volume goes up.”</p>
+              <div class="by"><span>Operations Director</span><span class="stars">★★★★★</span></div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      <footer id="contact" class="footer reveal">
+      <!-- FAQ -->
+      <section class="section reveal" data-tour="8" data-tour-title="FAQs">
+        <div class="faq">
+          <div class="faq-head">
+            <div class="faq-title">Questions teams usually ask us first</div>
+            <p class="faq-sub">How we plug in, how fast we move, and what to expect.</p>
+          </div>
+
+          <div class="faq-list" id="faqList">
+            <div class="faq-item">
+              <button type="button"><span class="faq-q">How quickly can you launch a new vertical or offer?</span><span class="faq-toggle">+</span></button>
+              <div class="faq-a">For most categories, we can move from alignment to first spend within 1–2 weeks, depending on compliance, routing, and creative approvals on your side.</div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button"><span class="faq-q">Do you handle both lead forms and inbound calls?</span><span class="faq-toggle">+</span></button>
+              <div class="faq-a">Yes. We support lead-only and direct inbound structures. The optimization logic is tuned to your preferred economics.</div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button"><span class="faq-q">How do you report performance back to us?</span><span class="faq-toggle">+</span></button>
+              <div class="faq-a">You get access to live dashboards plus a consistent cadence of summary reports and action plans so your internal team always knows what’s happening.</div>
+            </div>
+
+            <div class="faq-item">
+              <button type="button"><span class="faq-q">Can you work with our existing tracking and CRM setup?</span><span class="faq-toggle">+</span></button>
+              <div class="faq-a">We integrate with most leading CRMs, call tracking platforms, and analytics stacks. During onboarding, we map attribution and data flows so nothing breaks.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA -->
+      <section class="cta reveal" data-tour="9" data-tour-title="Next steps">
+        <h3 class="m0" style="font-size: clamp(18px, 2.4vw, 26px); font-weight: 900; letter-spacing: -0.02em">
+          Ready to talk?
+        </h3>
+        <a href="#contact" class="btn" style="white-space: nowrap">Get In Touch</a>
+      </section>
+
+      <!-- CONTACT (NEW) -->
+      <section id="contact" class="section reveal" data-tour="10" data-tour-title="Contact">
+        <div class="contact">
+          <h2 class="m0">Contact</h2>
+          <p class="lead mt8" style="max-width: 72ch">
+            Tell us what you’re running (vertical, geo, goals). We’ll reply with a clear next-step plan.
+          </p>
+
+          <div class="contact-grid">
+            <div class="contact-card">
+              <h3 class="m0">What to include</h3>
+              <p class="mt8">• Vertical(s) + target geo</p>
+              <p class="mt8">• Main KPI (CPA/CPL/ROAS)</p>
+              <p class="mt8">• Current volume + target scale</p>
+              <p class="mt8">• Tracking stack (if any)</p>
+              <p class="mt16 small">This form is UI-only. Hook it to your backend/email later.</p>
+            </div>
+
+            <form class="contact-card form" onsubmit="event.preventDefault(); alert('Submitted (demo). Connect this form to your backend.');">
+              <div class="row">
+                <input type="text" name="name" placeholder="Your name" required />
+                <input type="email" name="email" placeholder="Email address" required />
+              </div>
+              <div class="row">
+                <input type="text" name="company" placeholder="Company / Brand" />
+                <input type="text" name="vertical" placeholder="Vertical (Insurance / Legal / Finance...)" />
+              </div>
+              <textarea name="message" placeholder="Tell us what you're trying to scale..." required></textarea>
+              <button class="btn" type="submit">Send Message</button>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer class="footer reveal">
         <div>© 2025 Click Venture. All Rights Reserved.</div>
         <div style="display: flex; gap: 16px; flex-wrap: wrap">
+          <a href="#snapshots">Snapshots</a>
           <a href="#about">About</a>
           <a href="#services">Services</a>
           <a href="#products">Products</a>
+          <a href="#process">Process</a>
           <a href="#contact">Contact</a>
         </div>
       </footer>
     </main>
 
     <script>
-      // reveal animations
+      // ---------------- Reveal animations ----------------
       const io = new IntersectionObserver(
         (entries) => {
           entries.forEach((e) => {
@@ -1877,7 +1962,7 @@
       );
       document.querySelectorAll(".reveal").forEach((el) => io.observe(el));
 
-      // FAQ accordion
+      // ---------------- FAQ accordion ----------------
       document.querySelectorAll(".faq-item button").forEach((btn) => {
         btn.addEventListener("click", () => {
           const item = btn.parentElement;
@@ -1887,7 +1972,7 @@
         });
       });
 
-      // Scroll tour
+      // ---------------- Scroll tour ----------------
       const tourSections = Array.from(document.querySelectorAll("[data-tour]"));
       const tourIndicator = document.getElementById("tourIndicator");
       const tourTitleEl = document.getElementById("tourTitle");
@@ -1918,7 +2003,7 @@
         }
       }
 
-      // Scroll progress bar
+      // ---------------- Scroll progress bar ----------------
       const scrollBar = document.getElementById("scrollBar");
       function updateScrollBar() {
         const doc = document.documentElement;
@@ -1939,7 +2024,7 @@
         updateScrollBar();
       });
 
-      // Products filter
+      // ---------------- Products filter ----------------
       const chips = document.querySelectorAll("#prodChips .chip");
       const cards = document.querySelectorAll("#prodGrid .prod");
       chips.forEach((c) => {
@@ -1954,7 +2039,7 @@
         });
       });
 
-      // Tilt effect
+      // ---------------- Tilt effect ----------------
       document.querySelectorAll('.prod[data-tilt="1"]').forEach((el) => {
         function onMove(e) {
           const r = el.getBoundingClientRect();
