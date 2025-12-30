@@ -371,67 +371,8 @@
     .list li{margin: 8px 0}
     .list li span{color:var(--muted)}
 
-    .hookGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 12px;
-    }
-
-    .hookBox{
-      border-radius: 16px;
-      border: 1px solid rgba(226,232,240,.95);
-      background: linear-gradient(180deg, #ffffff, #fbfdfd);
-      padding: 12px;
-      box-shadow: 0 10px 18px rgba(15,23,42,.06);
-    }
-
-    .hookTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom: 10px;
-    }
-
-    .hookTop .pill{
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(11,43,42,.72);
-    }
-
-    .hookTop .count{
-      width: 28px;
-      height: 28px;
-      border-radius: 10px;
-      background: rgba(120,199,191,.22);
-      border: 1px solid rgba(120,199,191,.25);
-      display:grid;
-      place-items:center;
-      font-weight: 900;
-      color: rgba(11,43,42,.85);
-      font-size: 12px;
-    }
-
-    .hook{
-      font-weight: 800;
-      font-size: 13.5px;
-      color: #0f172a;
-      margin: 0 0 6px;
-      line-height: 1.45;
-    }
-    .why{
-      margin:0;
-      color: var(--muted);
-      font-size: 12.6px;
-      line-height: 1.45;
-    }
-    .why b{color:#0f172a}
-
     .timeline{
-      margin-top: 10px;
+      margin-top: 12px;
       display:grid;
       gap: 10px;
     }
@@ -471,6 +412,65 @@
       color: var(--muted);
       font-size: 13px;
       line-height: 1.55;
+    }
+
+    /* NEW: Experience styling */
+    .roleTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 10px;
+      margin-bottom: 6px;
+      flex-wrap:wrap;
+    }
+    .roleTitle{
+      margin: 0;
+      font-size: 14px;
+      font-weight: 900;
+      color:#0f172a;
+      line-height: 1.25;
+    }
+    .roleMeta{
+      display:flex;
+      gap: 8px;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:flex-end;
+    }
+    .roleChip{
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: rgba(120,199,191,.16);
+      border: 1px solid rgba(120,199,191,.22);
+      color: rgba(11,43,42,.78);
+      white-space: nowrap;
+    }
+    .roleOrg{
+      font-weight: 900;
+      color:#0b2b2a;
+    }
+    .roleHandle{
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 12.5px;
+    }
+    .roleBullets{
+      margin: 10px 0 0;
+      padding: 0 0 0 18px;
+      color:#0f172a;
+      font-size: 13.2px;
+      line-height: 1.62;
+    }
+    .roleBullets li{margin: 7px 0}
+    .roleBullets li span{color:var(--muted)}
+    .roleDivider{
+      margin-top: 12px;
+      border-top: 1px dashed rgba(203,213,225,.8);
+      padding-top: 12px;
     }
 
     .metrics{
@@ -525,7 +525,6 @@
       .headerBar{padding: 26px 18px 20px}
       .mainInner{padding: 18px}
       .section{padding-left: 52px}
-      .hookGrid{grid-template-columns: 1fr}
       .twoCol{grid-template-columns: 1fr}
       .metrics{grid-template-columns: 1fr}
     }
@@ -650,7 +649,7 @@
         <section class="sideSection">
           <h3>Focus</h3>
           <ul class="bullets">
-            <li><b>Content-to-conversion systems • hooks that stop, stories that sell</b></span></li>
+            <li><b>Content-to-conversion systems • hooks that stop, stories that sell</b></li>
             <li><b>Brand storytelling • authenticity over advertising</b></li>
             <li><b>Performance optimization • test, iterate, scale winners</b></li>
           </ul>
@@ -680,17 +679,20 @@
 
             <div class="card">
               <p class="lead">
-Instagram-first creative strategist with proven expertise in scaling brands from ground up. Specialized in hook psychology, viral content systems, and UGC production. Strong track record in script development, influencer partnerships, and full-funnel campaign execution across e-commerce and digital product verticals.
+                Instagram-first creative strategist with proven expertise in scaling brands from ground up.
+                Specialized in hook psychology, viral content systems, and UGC production. Strong track record in
+                script development, influencer partnerships, and full-funnel campaign execution across e-commerce
+                and digital product verticals.
               </p>
 
               <div class="twoCol">
                 <div class="mini">
                   <div class="k">Formats</div>
-                  <div class="v">Reels • UGC • Editorial</div>
+                  <div class="v">Reels • UGC • Informatives</div>
                 </div>
                 <div class="mini">
                   <div class="k">Outcome</div>
-                  <div class="v">Retention + Shares + Deals</div>
+                  <div class="v">Sales + Shares + Retention</div>
                 </div>
                 <div class="mini">
                   <div class="k">Style</div>
@@ -704,13 +706,7 @@ Instagram-first creative strategist with proven expertise in scaling brands from
             </div>
           </div>
 
-          <!-- 2) Process -->
-        
-
-          <!-- 3) Content Engine -->
-       
-
-          <!-- 4) Experience / Results -->
+          <!-- 2) Experience -->
           <div class="section">
             <div class="rail"></div>
             <div class="badge">2</div>
@@ -727,27 +723,89 @@ Instagram-first creative strategist with proven expertise in scaling brands from
 
               <div class="metrics">
                 <div class="metric">
-                  <div class="big">₹1,00,000+</div>
-                  <div class="sm">Daily ad spend managed</div>
+                  <div class="big">Instagram-first</div>
+                  <div class="sm">Platform-native funnels</div>
                 </div>
                 <div class="metric">
                   <div class="big">Full-funnel</div>
                   <div class="sm">Leads • Traffic • Conversions</div>
                 </div>
                 <div class="metric">
-                  <div class="big">Instagram-first</div>
-                  <div class="sm">Platform-native funnels</div>
+                  <div class="big">₹1,00,000+</div>
+                  <div class="sm">Daily ad spend managed</div>
                 </div>
               </div>
 
-              <ul class="list">
-                <li><b>Scaled multiple brands from zero</b><br><span>Testing winners, building iterations, and pushing reach through systemized output.</span></li>
-                <li><b>Creative strategist approach</b><br><span>Pacing, micro-moments, and emotion-driven story structure.</span></li>
-              </ul>
+              <!-- BEAUTIFUL EXPERIENCE BLOCKS (your content) -->
+              <div class="timeline">
+
+                <!-- Role 1 -->
+                <div class="step">
+                  <div class="stepNo">01</div>
+                  <div>
+                    <div class="roleTop">
+                      <div>
+                        <h4 class="roleTitle">Creative Strategist</h4>
+                        <div class="roleHandle">
+                          <span class="roleOrg">Case Crushers</span> • Instagram: <b>@casecrushers</b>
+                        </div>
+                      </div>
+                      <div class="roleMeta">
+                        <span class="roleChip">Brand Build</span>
+                        <span class="roleChip">IG Systems</span>
+                        <span class="roleChip">Partnerships</span>
+                      </div>
+                    </div>
+
+                    <ul class="roleBullets">
+                      <li><b>Built the brand from ground up</b> <span>— developed complete Instagram-native strategy + execution framework.</span></li>
+                      <li><b>Wrote conversion-focused scripts</b> <span>— leveraged hook psychology + retention optimization techniques.</span></li>
+                      <li><b>Spearheaded influencer outreach</b> <span>— identified and collaborated with category-relevant creators.</span></li>
+                      <li><b>Established brand voice + content systems</b> <span>— positioned Case Crushers for scalable growth.</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+                <!-- Role 2 -->
+                <div class="step">
+                  <div class="stepNo">02</div>
+                  <div>
+                    <div class="roleTop">
+                      <div>
+                        <h4 class="roleTitle">Creative Strategist &amp; UGC Producer</h4>
+                        <div class="roleHandle">
+                          <span class="roleOrg">EasyAstro</span> • Digital Astrology Platform
+                        </div>
+                      </div>
+                      <div class="roleMeta">
+                        <span class="roleChip">Ad Scripts</span>
+                        <span class="roleChip">UGC Production</span>
+                        <span class="roleChip">A/B Testing</span>
+                      </div>
+                    </div>
+
+                    <ul class="roleBullets">
+                      <li><b>Developed high-converting ad scripts</b> <span>— focused on emotional triggers + pain-point storytelling for launches.</span></li>
+                      <li><b>Managed end-to-end UGC production</b> <span>— creator briefing, shot lists, and quality control.</span></li>
+                      <li><b>Coordinated creator execution</b> <span>— ensured brand consistency while keeping a platform-native tone.</span></li>
+                      <li><b>Optimized content performance</b> <span>— A/B tested hooks, formats, and story frameworks to scale winners.</span></li>
+                    </ul>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="roleDivider">
+                <ul class="list">
+                  <li><b>Scaled multiple brands from zero</b><br><span>Testing winners, building iterations, and pushing reach through systemized output.</span></li>
+                  <li><b>Creative strategist approach</b><br><span>Pacing, micro-moments, and emotion-driven story structure.</span></li>
+                </ul>
+              </div>
+
             </div>
           </div>
 
-          <!-- 5) Partnerships -->
+          <!-- 3) Partnerships -->
           <div class="section">
             <div class="rail"></div>
             <div class="badge">3</div>
@@ -759,13 +817,13 @@ Instagram-first creative strategist with proven expertise in scaling brands from
 
             <div class="card">
               <p class="lead">
-                <strong>Brand Collaborations & Strategic Partnerships</strong><br>
+                <strong>Brand Collaborations &amp; Strategic Partnerships</strong><br>
                 Managed brand-integrated campaigns, content-first collaborations (not forced ads),
                 and long-term visibility partnerships.
               </p>
 
               <ul class="list">
-                <li><b>Experience aligning brands with emotion & storytelling</b><br><span>I integrate brands into stories — not stories into ads.</span></li>
+                <li><b>Experience aligning brands with emotion &amp; storytelling</b><br><span>I integrate brands into stories — not stories into ads.</span></li>
                 <li><b>Partnership-ready content design</b><br><span>Hook → shot list → edit rhythm → collaboration packaging.</span></li>
               </ul>
 
