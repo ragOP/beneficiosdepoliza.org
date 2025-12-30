@@ -13,25 +13,23 @@
     :root{
       --ink:#111827;
       --muted:#6b7280;
-      --line:#e5e7eb;
       --paper:#ffffff;
 
-      /* Theme (match screenshot vibe) */
       --mint:#bfe8e2;
       --mint-2:#eaf7f5;
-
       --accent:#2b7a78;
-      --accent-2:#78c7bf;
 
       --sidebar:#f4fbfa;
       --chip:#eef2f7;
 
       --radius:20px;
       --shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+      --line: rgba(229,231,235,.85);
     }
 
     *{box-sizing:border-box}
     html,body{height:100%}
+
     body{
       margin:0;
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
@@ -43,7 +41,7 @@
       padding:24px 14px;
     }
 
-    /* Page (A4-ish) */
+    /* Page */
     .page{
       max-width: 980px;
       margin: 0 auto;
@@ -64,319 +62,175 @@
     .sidebar{
       background: linear-gradient(180deg, var(--sidebar), #ffffff);
       padding: 26px 22px 26px;
-      border-right: 1px solid rgba(229,231,235,.8);
-      position: relative;
+      border-right: 1px solid var(--line);
     }
 
-    .photoWrap{
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      margin-top: 6px;
-      margin-bottom: 16px;
-    }
-
+    .photoWrap{display:flex;justify-content:center;margin:6px 0 16px}
     .photoRing{
-      width: 170px;
-      height: 170px;
-      border-radius: 999px;
+      width: 170px;height: 170px;border-radius:999px;padding:10px;
       background:
         radial-gradient(circle at 35% 30%, rgba(255,255,255,.95), rgba(255,255,255,.55) 40%, rgba(255,255,255,.2) 70%),
         linear-gradient(180deg, rgba(120,199,191,.85), rgba(43,122,120,.55));
-      padding: 10px;
       box-shadow: 0 12px 26px rgba(17,24,39,.14);
     }
+    .photo{width:100%;height:100%;border-radius:999px;object-fit:cover;display:block;background:#e5e7eb}
 
-    .photo{
-      width: 100%;
-      height: 100%;
-      border-radius: 999px;
-      object-fit: cover;
-      display:block;
-      background:#e5e7eb;
-    }
+    .sideTitle{font-weight:800;font-size:20px;text-align:center;margin:4px 0 2px;letter-spacing:.2px}
+    .sideRole{text-align:center;color:var(--muted);font-weight:600;font-size:12.5px;margin:0 0 18px}
 
-    .sideTitle{
-      font-weight: 800;
-      font-size: 20px;
-      text-align:center;
-      margin: 4px 0 2px;
-      letter-spacing: .2px;
-    }
-    .sideRole{
-      text-align:center;
-      color: var(--muted);
-      font-weight: 600;
-      font-size: 12.5px;
-      margin: 0 0 18px;
-    }
-
-    .sideSection{
-      margin-top: 18px;
-      padding-top: 14px;
-      border-top: 1px solid rgba(229,231,235,.8);
-    }
-
+    .sideSection{margin-top:18px;padding-top:14px;border-top: 1px solid var(--line)}
     .sideSection h3{
-      margin:0 0 10px;
-      font-size: 12px;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-      color: #334155;
-      display:flex;
-      align-items:center;
-      gap:10px;
+      margin:0 0 10px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#334155;
+      display:flex;align-items:center;gap:10px
     }
+    .sideSection h3:after{content:"";height:1px;background:rgba(203,213,225,.75);flex:1}
 
-    .sideSection h3:after{
-      content:"";
-      height: 1px;
-      background: rgba(203,213,225,.75);
-      flex: 1;
-    }
-
-    .contactList{
-      margin: 0;
-      padding: 0;
-      list-style: none;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-
-    .contactItem{
-      display:flex;
-      gap:10px;
-      align-items:flex-start;
-      color: #0f172a;
-      font-size: 12.8px;
-    }
+    .contactList{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+    .contactItem{display:flex;gap:10px;align-items:flex-start;color:#0f172a;font-size:12.8px}
     .icon{
-      width: 22px;
-      height: 22px;
-      border-radius: 8px;
-      background: rgba(120,199,191,.22);
-      display:grid;
-      place-items:center;
-      flex: 0 0 22px;
-      border: 1px solid rgba(120,199,191,.25);
+      width:22px;height:22px;border-radius:8px;background:rgba(120,199,191,.22);
+      display:grid;place-items:center;flex:0 0 22px;border:1px solid rgba(120,199,191,.25)
     }
     .icon svg{width:14px;height:14px;opacity:.9}
     .contactItem span{color:var(--muted)}
     .contactItem a{color:inherit;text-decoration:none}
     .contactItem a:hover{color:var(--accent);text-decoration:underline}
 
-    .bullets{
-      margin: 10px 0 0;
-      padding: 0 0 0 16px;
-      color:#0f172a;
-      font-size: 12.8px;
-      line-height: 1.55;
-    }
-    .bullets li{margin: 6px 0}
+    .bullets{margin:10px 0 0;padding:0 0 0 16px;color:#0f172a;font-size:12.8px;line-height:1.55}
+    .bullets li{margin:6px 0}
     .bullets li span{color:var(--muted)}
 
-    .tagGrid{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin-top: 10px;
-    }
+    .tagGrid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
     .tag{
-      font-size: 12px;
-      padding: 8px 10px;
-      border-radius: 999px;
-      background: var(--chip);
-      border: 1px solid rgba(226,232,240,.9);
-      color:#0f172a;
-      font-weight:600;
+      font-size:12px;padding:8px 10px;border-radius:999px;background:var(--chip);
+      border:1px solid rgba(226,232,240,.9);color:#0f172a;font-weight:600
     }
 
-    .langRow{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      margin-top: 10px;
-      font-size: 12.8px;
-      color:#0f172a;
-    }
-    .dots{
-      display:flex;
-      gap:6px;
-    }
-    .dot{
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: rgba(100,116,139,.25);
-    }
+    .langRow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;font-size:12.8px}
+    .dots{display:flex;gap:6px}
+    .dot{width:7px;height:7px;border-radius:999px;background:rgba(100,116,139,.25)}
     .dot.on{background: rgba(43,122,120,.75)}
-
-    .smallNote{
-      margin-top: 10px;
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
+    .smallNote{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.5}
 
     /* Main */
-    .main{
-      padding: 0;
-      background: linear-gradient(180deg, #ffffff, #ffffff);
-    }
-
+    .main{background:#fff}
     .headerBar{
       background: linear-gradient(90deg, var(--mint), var(--mint-2));
       padding: 34px 30px 28px;
-      border-bottom: 1px solid rgba(229,231,235,.8);
+      border-bottom: 1px solid var(--line);
       position: relative;
+      overflow:hidden;
     }
-
     .name{
-      margin:0;
-      font-size: 44px;
-      letter-spacing: .12em;
-      font-weight: 800;
-      line-height: 1.06;
-      color: #0b2b2a;
-      text-transform: uppercase;
+      margin:0;font-size:44px;letter-spacing:.12em;font-weight:800;line-height:1.06;
+      color:#0b2b2a;text-transform:uppercase
     }
-
     .headline{
-      margin: 10px 0 0;
-      font-size: 13px;
-      letter-spacing: .28em;
-      text-transform: uppercase;
-      color: rgba(11,43,42,.7);
-      font-weight: 700;
+      margin:10px 0 0;font-size:13px;letter-spacing:.28em;text-transform:uppercase;
+      color:rgba(11,43,42,.7);font-weight:700
     }
 
-    .mainInner{
-      padding: 22px 30px 30px;
+    /* Download PDF button */
+    .dlBtn{
+      position:absolute;right:22px;top:22px;
+      border:1px solid rgba(11,43,42,.18);
+      background: rgba(255,255,255,.65);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      color:#0b2b2a;
+      font-weight:900;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      font-size:12px;
+      padding:10px 12px;
+      border-radius: 999px;
+      cursor:pointer;
+      box-shadow: 0 10px 20px rgba(15,23,42,.08);
+      display:flex;align-items:center;gap:8px;
+      user-select:none;
     }
+    .dlBtn:active{transform: translateY(1px)}
+    .dlBtn svg{width:16px;height:16px}
 
+    .mainInner{padding: 22px 30px 30px}
+
+    /* Sections rail (FIX: keep inside on mobile) */
     .section{
-      position: relative;
-      padding-left: 56px;
+      position:relative;
+      padding-left: 70px;          /* more space so it won't get cut */
       margin-top: 18px;
     }
-
-    .section:first-child{margin-top: 0}
+    .section:first-child{margin-top:0}
 
     .rail{
       position:absolute;
-      left: 20px;
+      left: 30px;
       top: 0;
       bottom: 0;
       width: 2px;
       background: rgba(120,199,191,.55);
       border-radius: 999px;
     }
-
     .badge{
       position:absolute;
-      left: 9px;
+      left: 18px;
       top: 4px;
-      width: 24px;
-      height: 24px;
+      width: 26px;
+      height: 26px;
       border-radius: 999px;
       background: #ffffff;
       border: 2px solid rgba(120,199,191,.9);
       display:grid;
       place-items:center;
-      font-weight: 800;
+      font-weight: 900;
       color: rgba(11,43,42,.85);
       font-size: 12px;
       box-shadow: 0 8px 18px rgba(17,24,39,.08);
     }
 
-    .secHeader{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin-bottom: 12px;
-    }
-
+    .secHeader{display:flex;align-items:center;gap:12px;margin-bottom:12px}
     .secHeader h2{
-      margin:0;
-      font-size: 14px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color:#334155;
-      font-weight: 800;
-      white-space: nowrap;
+      margin:0;font-size:14px;letter-spacing:.22em;text-transform:uppercase;
+      color:#334155;font-weight:800;white-space:nowrap
     }
-
     .secHeader .bar{
-      height: 8px;
-      flex: 1;
-      border-radius: 999px;
+      height: 8px;flex:1;border-radius:999px;
       background: linear-gradient(90deg, rgba(120,199,191,.45), rgba(120,199,191,.05));
       border: 1px solid rgba(120,199,191,.18);
     }
 
     .card{
-      background: #ffffff;
-      border: 1px solid rgba(226,232,240,.95);
-      border-radius: 16px;
-      padding: 14px 14px;
-      box-shadow: 0 10px 22px rgba(15,23,42,.06);
+      background:#fff;border:1px solid rgba(226,232,240,.95);
+      border-radius:16px;padding:14px;box-shadow:0 10px 22px rgba(15,23,42,.06);
     }
-
-    .lead{
-      margin: 0;
-      font-size: 13.5px;
-      color: #0f172a;
-      line-height: 1.65;
-    }
-
+    .lead{margin:0;font-size:13.5px;color:#0f172a;line-height:1.65}
     .lead strong{font-weight:800}
 
     .twoCol{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 12px;
+      display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;
     }
-
     .mini{
-      padding: 12px;
-      border-radius: 14px;
+      padding:12px;border-radius:14px;
       background: linear-gradient(180deg, rgba(120,199,191,.16), rgba(120,199,191,.05));
       border: 1px solid rgba(120,199,191,.18);
     }
-
     .mini .k{
-      font-size: 11px;
-      color: rgba(11,43,42,.72);
-      letter-spacing: .18em;
-      text-transform: uppercase;
-      font-weight: 800;
-      margin-bottom: 6px;
+      font-size:11px;color:rgba(11,43,42,.72);letter-spacing:.18em;text-transform:uppercase;
+      font-weight:800;margin-bottom:6px
     }
-    .mini .v{
-      font-size: 13px;
-      font-weight: 800;
-      color:#0b2b2a;
-    }
+    .mini .v{font-size:13px;font-weight:800;color:#0b2b2a}
 
-    .list{
-      margin: 10px 0 0;
-      padding: 0 0 0 18px;
-      color:#0f172a;
-      font-size: 13.2px;
-      line-height: 1.62;
+    .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px}
+    .metric{
+      border-radius:16px;padding:12px;border:1px solid rgba(226,232,240,.95);
+      background: linear-gradient(180deg, rgba(120,199,191,.10), rgba(255,255,255,.92));
+      box-shadow: 0 10px 18px rgba(15,23,42,.05);
     }
-    .list li{margin: 8px 0}
-    .list li span{color:var(--muted)}
+    .metric .big{font-weight:900;font-size:18px;color:#0b2b2a;margin-bottom:4px}
+    .metric .sm{color:var(--muted);font-size:12.5px;line-height:1.4}
 
-    .timeline{
-      margin-top: 12px;
-      display:grid;
-      gap: 10px;
-    }
-
+    /* Experience blocks */
+    .timeline{margin-top:12px;display:grid;gap:10px}
     .step{
       display:grid;
       grid-template-columns: 44px 1fr;
@@ -389,156 +243,85 @@
       box-shadow: 0 10px 18px rgba(15,23,42,.05);
     }
 
-    .stepNo{
-      width: 44px;
-      height: 44px;
-      border-radius: 14px;
-      display:grid;
-      place-items:center;
-      font-weight: 900;
-      color: rgba(11,43,42,.9);
-      background: linear-gradient(180deg, rgba(120,199,191,.30), rgba(120,199,191,.10));
+    /* Replace 01/02 with images */
+    .stepIcon{
+      width:44px;height:44px;border-radius:14px;
+      display:grid;place-items:center;
+      background: linear-gradient(180deg, rgba(120,199,191,.22), rgba(120,199,191,.08));
       border: 1px solid rgba(120,199,191,.25);
+      overflow:hidden;
+    }
+    .stepIcon img{
+      width: 80%;
+      height: 80%;
+      object-fit: contain;
+      display:block;
+      filter: drop-shadow(0 6px 12px rgba(15,23,42,.10));
     }
 
-    .step h4{
-      margin: 2px 0 4px;
-      font-size: 14px;
-      font-weight: 900;
-      color:#0f172a;
-    }
-    .step p{
-      margin: 0;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.55;
-    }
-
-    /* NEW: Experience styling */
     .roleTop{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap: 10px;
-      margin-bottom: 6px;
-      flex-wrap:wrap;
+      display:flex;align-items:flex-start;justify-content:space-between;gap:10px;
+      margin-bottom: 6px;flex-wrap:wrap
     }
-    .roleTitle{
-      margin: 0;
-      font-size: 14px;
-      font-weight: 900;
-      color:#0f172a;
-      line-height: 1.25;
-    }
-    .roleMeta{
-      display:flex;
-      gap: 8px;
-      flex-wrap:wrap;
-      align-items:center;
-      justify-content:flex-end;
-    }
+    .roleTitle{margin:0;font-size:14px;font-weight:900;color:#0f172a;line-height:1.25}
+    .roleHandle{color:var(--muted);font-weight:700;font-size:12.5px}
+    .roleOrg{font-weight:900;color:#0b2b2a}
+    .roleMeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:flex-end}
     .roleChip{
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: rgba(120,199,191,.16);
-      border: 1px solid rgba(120,199,191,.22);
-      color: rgba(11,43,42,.78);
-      white-space: nowrap;
+      font-size:11px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;
+      padding:7px 10px;border-radius:999px;background:rgba(120,199,191,.16);
+      border:1px solid rgba(120,199,191,.22);color:rgba(11,43,42,.78);white-space:nowrap
     }
-    .roleOrg{
-      font-weight: 900;
-      color:#0b2b2a;
-    }
-    .roleHandle{
-      color: var(--muted);
-      font-weight: 700;
-      font-size: 12.5px;
-    }
-    .roleBullets{
-      margin: 10px 0 0;
-      padding: 0 0 0 18px;
-      color:#0f172a;
-      font-size: 13.2px;
-      line-height: 1.62;
-    }
-    .roleBullets li{margin: 7px 0}
+    .roleBullets{margin:10px 0 0;padding:0 0 0 18px;color:#0f172a;font-size:13.2px;line-height:1.62}
+    .roleBullets li{margin:7px 0}
     .roleBullets li span{color:var(--muted)}
-    .roleDivider{
-      margin-top: 12px;
-      border-top: 1px dashed rgba(203,213,225,.8);
-      padding-top: 12px;
-    }
+    .roleDivider{margin-top:12px;border-top:1px dashed rgba(203,213,225,.8);padding-top:12px}
 
-    .metrics{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-top: 12px;
-    }
-    .metric{
-      border-radius: 16px;
-      padding: 12px;
-      border: 1px solid rgba(226,232,240,.95);
-      background: linear-gradient(180deg, rgba(120,199,191,.10), rgba(255,255,255,.92));
-      box-shadow: 0 10px 18px rgba(15,23,42,.05);
-    }
-    .metric .big{
-      font-weight: 900;
-      font-size: 18px;
-      color:#0b2b2a;
-      margin-bottom: 4px;
-      letter-spacing: .02em;
-    }
-    .metric .sm{
-      color: var(--muted);
-      font-size: 12.5px;
-      line-height: 1.4;
-    }
+    .list{margin:10px 0 0;padding:0 0 0 18px;color:#0f172a;font-size:13.2px;line-height:1.62}
+    .list li{margin:8px 0}
+    .list li span{color:var(--muted)}
 
     .footerLine{
-      margin-top: 16px;
-      border-top: 1px solid rgba(229,231,235,.9);
-      padding-top: 14px;
-      display:flex;
-      justify-content:space-between;
-      gap:10px;
-      flex-wrap:wrap;
-      color: var(--muted);
-      font-size: 12px;
+      margin-top:16px;border-top:1px solid rgba(229,231,235,.9);
+      padding-top:14px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;
+      color:var(--muted);font-size:12px
     }
 
     /* Responsive */
     @media (max-width: 980px){
-      .page{border-radius: 18px}
       .grid{grid-template-columns: 320px 1fr}
-      .name{font-size: 40px}
+      .name{font-size:40px}
     }
-
     @media (max-width: 820px){
       body{padding:14px 10px}
       .grid{grid-template-columns: 1fr}
-      .sidebar{border-right:0;border-bottom: 1px solid rgba(229,231,235,.85)}
+      .sidebar{border-right:0;border-bottom: 1px solid var(--line)}
       .headerBar{padding: 26px 18px 20px}
-      .mainInner{padding: 18px}
-      .section{padding-left: 52px}
+      .dlBtn{right:14px;top:14px}
+      .mainInner{padding:18px}
+      .section{padding-left: 62px}
+      .rail{left: 26px}
+      .badge{left: 14px}
       .twoCol{grid-template-columns: 1fr}
       .metrics{grid-template-columns: 1fr}
     }
 
+    /* PDF export mode (clean background, no shadow) */
+    .pdf-export body{background:#fff !important; padding:0 !important}
+    .pdf-export .page{box-shadow:none !important; border-radius:0 !important; border:none !important}
+    .pdf-export .dlBtn{display:none !important}
+
     @media print{
       body{background:#fff; padding:0}
       .page{box-shadow:none; border-radius:0; border:none}
+      .dlBtn{display:none}
       a{text-decoration:none}
     }
   </style>
 </head>
 
 <body>
-  <main class="page">
+  <main class="page" id="resume">
     <div class="grid">
       <!-- =======================
            SIDEBAR
@@ -565,7 +348,7 @@
               </div>
               <div>
                 <div><a href="tel:+916386421290">+91-6386421290</a></div>
-                <span>WhatsApp ready</span>
+                <!-- <span>WhatsApp ready</span> -->
               </div>
             </li>
 
@@ -578,7 +361,6 @@
               </div>
               <div>
                 <div>Lucknow, India</div>
-                <span>Available for partnerships</span>
               </div>
             </li>
 
@@ -590,8 +372,8 @@
                 </svg>
               </div>
               <div>
-                <div><a href="#" onclick="return false;">amandev@yourmail.com</a></div>
-                <span>Replace with real email</span>
+                <div><a href="#" onclick="return false;">amandevcg@gmail.com</a></div>
+                <!-- <span>Replace with real email</span> -->
               </div>
             </li>
           </ul>
@@ -600,7 +382,7 @@
         <section class="sideSection">
           <h3>Education</h3>
           <ul class="bullets">
-            <li><b>B.A. English (Honours)</b> <span>• Undergraduate</span></li>
+            <li><b>B.A. English (Honours) - Amity University Lucknow</b> <span>• Undergraduate</span></li>
           </ul>
           <div class="smallNote">
             Creative writing + storytelling foundation — applied to Instagram-native scripts, hook psychology, and brand narrative.
@@ -610,13 +392,13 @@
         <section class="sideSection">
           <h3>Core Skills</h3>
           <div class="tagGrid">
-            <div class="tag">Hook scripting</div>
+            <div class="tag">Scripting</div>
             <div class="tag">IG strategy</div>
-            <div class="tag">Shot list</div>
+            <!-- <div class="tag">Shot list</div> -->
             <div class="tag">Visual direction</div>
             <div class="tag">UGC systems</div>
-            <div class="tag">Virality testing</div>
-            <div class="tag">Partnerships</div>
+            <!-- <div class="tag">A testing</div> -->
+            <!-- <div class="tag">Partnerships</div> -->
             <div class="tag">Content funnels</div>
           </div>
         </section>
@@ -626,7 +408,7 @@
           <ul class="bullets">
             <li><b>Reels</b> <span>• high-retention cuts</span></li>
             <li><b>UGC</b> <span>• creator-first tone</span></li>
-            <li><b>Editorial</b> <span>• cinematic story flow</span></li>
+            <li><b>Informatives</b> <span>• cinematic story flow</span></li>
           </ul>
         </section>
 
@@ -661,12 +443,20 @@
       ======================== -->
       <section class="main">
         <header class="headerBar">
+          <button class="dlBtn" id="downloadPdfBtn" type="button" title="Download as PDF">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 3v12"></path>
+              <path d="M7 10l5 5 5-5"></path>
+              <path d="M5 21h14"></path>
+            </svg>
+            Download PDF
+          </button>
+
           <h1 class="name">Aman<br/>Dev</h1>
           <div class="headline">Creative Strategist Resume</div>
         </header>
 
         <div class="mainInner">
-
           <!-- 1) Personal Profile -->
           <div class="section">
             <div class="rail"></div>
@@ -736,12 +526,17 @@
                 </div>
               </div>
 
-              <!-- BEAUTIFUL EXPERIENCE BLOCKS (your content) -->
+              <!-- Your Experience Roles -->
               <div class="timeline">
 
-                <!-- Role 1 -->
+                <!-- Role 1 (Case Crushers) -->
                 <div class="step">
-                  <div class="stepNo">01</div>
+                  <div class="stepIcon" aria-hidden="true">
+                    <img
+                      src="https://casecrushers.in/cdn/shop/files/Screenshot_2024-11-25_at_4.30.06_PM-removebg-preview-2.png?v=1732532456&width=500"
+                      alt=""
+                    />
+                  </div>
                   <div>
                     <div class="roleTop">
                       <div>
@@ -758,23 +553,28 @@
                     </div>
 
                     <ul class="roleBullets">
-                      <li><b>Built the brand from ground up</b> <span>— developed complete Instagram-native strategy + execution framework.</span></li>
-                      <li><b>Wrote conversion-focused scripts</b> <span>— leveraged hook psychology + retention optimization techniques.</span></li>
-                      <li><b>Spearheaded influencer outreach</b> <span>— identified and collaborated with category-relevant creators.</span></li>
-                      <li><b>Established brand voice + content systems</b> <span>— positioned Case Crushers for scalable growth.</span></li>
+                      <li><b>Built brand from ground up</b> <span>— developing complete Instagram-native content strategy and execution framework.</span></li>
+                      <li><b>Wrote conversion-focused scripts</b> <span>— leveraging hook psychology and retention optimization techniques.</span></li>
+                      <li><b>Spearheaded influencer outreach</b> <span>— identifying and collaborating with category-relevant creators.</span></li>
+                      <li><b>Established brand voice + systems</b> <span>— positioning Case Crushers for scalable growth.</span></li>
                     </ul>
                   </div>
                 </div>
 
-                <!-- Role 2 -->
+                <!-- Role 2 (Image instead of EasyAstro text badge; company shown as the image brand) -->
                 <div class="step">
-                  <div class="stepNo">02</div>
+                  <div class="stepIcon" aria-hidden="true">
+                    <img
+                      src="https://ik.imagekit.io/5r36kvobl/ChatGPT%20Image%20Jul%2020,%202025,%2003_59_24%20PM.png"
+                      alt=""
+                    />
+                  </div>
                   <div>
                     <div class="roleTop">
                       <div>
                         <h4 class="roleTitle">Creative Strategist &amp; UGC Producer</h4>
                         <div class="roleHandle">
-                          <span class="roleOrg">EasyAstro</span> • Digital Astrology Platform
+                          <span class="roleOrg">Digital Astrology Platform</span> • UGC + Ad Creative
                         </div>
                       </div>
                       <div class="roleMeta">
@@ -785,10 +585,10 @@
                     </div>
 
                     <ul class="roleBullets">
-                      <li><b>Developed high-converting ad scripts</b> <span>— focused on emotional triggers + pain-point storytelling for launches.</span></li>
-                      <li><b>Managed end-to-end UGC production</b> <span>— creator briefing, shot lists, and quality control.</span></li>
-                      <li><b>Coordinated creator execution</b> <span>— ensured brand consistency while keeping a platform-native tone.</span></li>
-                      <li><b>Optimized content performance</b> <span>— A/B tested hooks, formats, and story frameworks to scale winners.</span></li>
+                      <li><b>Developed high-converting ad scripts</b> <span>— focused on emotional triggers and pain-point storytelling.</span></li>
+                      <li><b>Managed end-to-end UGC production</b> <span>— creator briefing, shot list development, and content quality control.</span></li>
+                      <li><b>Coordinated creator execution</b> <span>— ensured brand consistency while maintaining authentic, platform-native tone.</span></li>
+                      <li><b>Optimized content performance</b> <span>— A/B tested hooks, formats, and storytelling frameworks.</span></li>
                     </ul>
                   </div>
                 </div>
@@ -840,8 +640,42 @@
     </div>
   </main>
 
+  <!-- html2pdf (client-side PDF download) -->
+  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+
   <script>
+    // footer year
     document.getElementById("yr").textContent = new Date().getFullYear();
+
+    // Download as PDF
+    const btn = document.getElementById("downloadPdfBtn");
+    const resume = document.getElementById("resume");
+
+    function downloadPDF(){
+      // Clean look for PDF
+      document.documentElement.classList.add("pdf-export");
+
+      const opt = {
+        margin:       [8, 8, 8, 8], // top, left, bottom, right (mm-ish in html2pdf)
+        filename:     "Aman-Dev-Resume.pdf",
+        image:        { type: "jpeg", quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
+        jsPDF:        { unit: "mm", format: "a4", orientation: "portrait" },
+        pagebreak:    { mode: ["avoid-all", "css", "legacy"] }
+      };
+
+      // Slight delay so CSS applies
+      setTimeout(() => {
+        html2pdf()
+          .set(opt)
+          .from(resume)
+          .save()
+          .then(() => document.documentElement.classList.remove("pdf-export"))
+          .catch(() => document.documentElement.classList.remove("pdf-export"));
+      }, 50);
+    }
+
+    btn.addEventListener("click", downloadPDF);
   </script>
 </body>
 </html>
