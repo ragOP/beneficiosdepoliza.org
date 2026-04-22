@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <title>Find My Car from Screenshot</title>
+  <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-1: #0b1020;
+      --bg-2: #111933;
+      --card: rgba(255, 255, 255, 0.08);
+      --card-border: rgba(255, 255, 255, 0.14);
+      --text: #f5f7ff;
+      --muted: #b9c2e0;
+      --accent: #7c9cff;
+      --accent-2: #5eead4;
+      --danger: #ff7f7f;
+      --success: #83ffb1;
+      --warning: #ffd580;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124, 156, 255, 0.22), transparent 28%),
+        radial-gradient(circle at top right, rgba(94, 234, 212, 0.16), transparent 20%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+      padding: 24px;
+    }
+
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 24px;
+      padding: 28px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: clamp(28px, 4vw, 42px);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+    }
+
+    .hero p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.65;
+      max-width: 820px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      padding: 20px;
+    }
+
+    .section-title {
+      margin: 0 0 14px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .muted {
+      color: var(--muted);
+    }
+
+    .upload-box {
+      border: 1px dashed rgba(255, 255, 255, 0.25);
+      border-radius: 20px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .upload-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, opacity 0.18s ease, box-shadow 0.18s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-primary {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), #5b7fff);
+      box-shadow: 0 10px 26px rgba(124, 156, 255, 0.24);
+    }
+
+    .btn-secondary {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .btn-success {
+      color: #07110c;
+      background: linear-gradient(135deg, var(--success), #5eead4);
+    }
+
+    .btn-danger {
+      color: #fff;
+      background: linear-gradient(135deg, #ff6b6b, #ff8f8f);
+    }
+
+    .input,
+    .file-input {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      border-radius: 14px;
+      padding: 13px 14px;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .input::placeholder {
+      color: rgba(255, 255, 255, 0.45);
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .preview-wrap {
+      margin-top: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .preview {
+      width: 100%;
+      max-height: 420px;
+      object-fit: contain;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat {
+      border-radius: 18px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 100px;
+    }
+
+    .label {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .value {
+      font-size: 16px;
+      line-height: 1.45;
+      word-break: break-word;
+    }
+
+    .value.big {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .status {
+      margin-top: 14px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      font-size: 14px;
+      line-height: 1.55;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      white-space: pre-wrap;
+    }
+
+    .status.success {
+      border-color: rgba(131, 255, 177, 0.28);
+      background: rgba(131, 255, 177, 0.08);
+    }
+
+    .status.error {
+      border-color: rgba(255, 127, 127, 0.28);
+      background: rgba(255, 127, 127, 0.08);
+    }
+
+    .status.warn {
+      border-color: rgba(255, 213, 128, 0.28);
+      background: rgba(255, 213, 128, 0.08);
+    }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .small {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .ocr-box {
+      max-height: 220px;
+      overflow: auto;
+      white-space: pre-wrap;
+      word-break: break-word;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      padding: 14px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(0, 0, 0, 0.18);
+      color: #dbe4ff;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .footer-note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 980px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      body {
+        padding: 16px;
+      }
+
+      .hero,
+      .card {
+        padding: 16px;
+      }
+
+      .stats,
+      .actions-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>Find My Car from Screenshot</h1>
+      <p>
+        Upload your CloudDVR screenshot, extract the GPS coordinates automatically, compare them with your current location, and open the route in Google Maps with one tap.
+      </p>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h2 class="section-title">Upload Screenshot</h2>
+
+        <div class="upload-box stack">
+          <input
+            id="imageInput"
+            class="file-input"
+            type="file"
+            accept="image/*"
+          />
+
+          <div class="upload-actions">
+            <button id="extractBtn" class="btn btn-primary">Extract Coordinates from Screenshot</button>
+            <button id="getLocationBtn" class="btn btn-secondary">Get My Current Location</button>
+            <button id="clearBtn" class="btn btn-danger">Clear</button>
+          </div>
+
+          <div class="small">
+            Supported coordinate examples:
+            <br />
+            <strong>N25°15'33" E85°47'57"</strong>
+            <br />
+            <strong>N25 15 33 E85 47 57</strong>
+            <br />
+            <strong>25.2592, 85.7992</strong>
+          </div>
+        </div>
+
+        <div class="preview-wrap">
+          <img id="previewImage" class="preview" alt="Screenshot preview" style="display:none;" />
+
+          <div class="stack">
+            <label for="manualCoords" class="small">Manual fix / paste coordinates if OCR misses something</label>
+            <input
+              id="manualCoords"
+              class="input"
+              type="text"
+              placeholder='Example: N25°15''33" E85°47''57" or 25.2592,85.7992'
+            />
+            <button id="useManualBtn" class="btn btn-secondary">Use Manual Coordinates</button>
+          </div>
+        </div>
+
+        <div id="statusBox" class="status">Waiting for screenshot...</div>
+
+        <div style="margin-top:16px;">
+          <div class="label">OCR Extracted Text</div>
+          <div id="ocrText" class="ocr-box">No OCR text yet.</div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Location Summary</h2>
+
+        <div class="stats">
+          <div class="stat">
+            <div class="label">Car Coordinates</div>
+            <div id="carCoordsValue" class="value">Not found yet</div>
+          </div>
+
+          <div class="stat">
+            <div class="label">Your Coordinates</div>
+            <div id="myCoordsValue" class="value">Not fetched yet</div>
+          </div>
+
+          <div class="stat">
+            <div class="label">Distance to Car</div>
+            <div id="distanceValue" class="value big">--</div>
+          </div>
+
+          <div class="stat">
+            <div class="label">Estimated Travel Hint</div>
+            <div id="travelHintValue" class="value">--</div>
+          </div>
+        </div>
+
+        <div style="margin-top:18px;" class="stack">
+          <div class="pill">Car location is taken from screenshot OCR</div>
+          <div class="pill">Your location comes from browser GPS</div>
+        </div>
+
+        <div style="margin-top:18px;">
+          <h3 class="section-title" style="font-size:16px; margin-bottom:12px;">Quick Actions</h3>
+          <div class="actions-grid">
+            <button id="openCarMapBtn" class="btn btn-secondary" disabled>Open Car in Maps</button>
+            <button id="navigateBtn" class="btn btn-success" disabled>Navigate to Car</button>
+            <button id="compareBtn" class="btn btn-primary" disabled>Compare My Location vs Car</button>
+            <button id="copyCoordsBtn" class="btn btn-secondary" disabled>Copy Car Coordinates</button>
+          </div>
+        </div>
+
+        <div class="footer-note">
+          Best use: upload the latest screenshot from CloudDVR, tap extract, then tap navigate. If OCR reads one character wrong, correct it in the manual box and tap <strong>Use Manual Coordinates</strong>.
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const imageInput = document.getElementById("imageInput");
+    const previewImage = document.getElementById("previewImage");
+    const extractBtn = document.getElementById("extractBtn");
+    const getLocationBtn = document.getElementById("getLocationBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const manualCoords = document.getElementById("manualCoords");
+    const useManualBtn = document.getElementById("useManualBtn");
+
+    const statusBox = document.getElementById("statusBox");
+    const ocrText = document.getElementById("ocrText");
+
+    const carCoordsValue = document.getElementById("carCoordsValue");
+    const myCoordsValue = document.getElementById("myCoordsValue");
+    const distanceValue = document.getElementById("distanceValue");
+    const travelHintValue = document.getElementById("travelHintValue");
+
+    const openCarMapBtn = document.getElementById("openCarMapBtn");
+    const navigateBtn = document.getElementById("navigateBtn");
+    const compareBtn = document.getElementById("compareBtn");
+    const copyCoordsBtn = document.getElementById("copyCoordsBtn");
+
+    let uploadedImageFile = null;
+    let carLocation = null;
+    let myLocation = null;
+
+    function setStatus(message, type = "") {
+      statusBox.textContent = message;
+      statusBox.className = "status";
+      if (type) statusBox.classList.add(type);
+    }
+
+    function toFixedSafe(num, digits = 6) {
+      return typeof num === "number" && Number.isFinite(num) ? num.toFixed(digits) : "--";
+    }
+
+    function updateUI() {
+      if (carLocation) {
+        carCoordsValue.innerHTML =
+          `<strong>Lat:</strong> ${toFixedSafe(carLocation.lat)}<br><strong>Lng:</strong> ${toFixedSafe(carLocation.lng)}`;
+        openCarMapBtn.disabled = false;
+        copyCoordsBtn.disabled = false;
+      } else {
+        carCoordsValue.textContent = "Not found yet";
+        openCarMapBtn.disabled = true;
+        copyCoordsBtn.disabled = true;
+      }
+
+      if (myLocation) {
+        myCoordsValue.innerHTML =
+          `<strong>Lat:</strong> ${toFixedSafe(myLocation.lat)}<br><strong>Lng:</strong> ${toFixedSafe(myLocation.lng)}<br><strong>Accuracy:</strong> ${Math.round(myLocation.accuracy || 0)} m`;
+      } else {
+        myCoordsValue.textContent = "Not fetched yet";
+      }
+
+      if (carLocation && myLocation) {
+        const meters = haversineDistance(
+          myLocation.lat,
+          myLocation.lng,
+          carLocation.lat,
+          carLocation.lng
+        );
+
+        distanceValue.textContent = formatDistance(meters);
+        travelHintValue.textContent = getTravelHint(meters);
+        navigateBtn.disabled = false;
+        compareBtn.disabled = false;
+      } else {
+        distanceValue.textContent = "--";
+        travelHintValue.textContent = "--";
+        navigateBtn.disabled = true;
+        compareBtn.disabled = true;
+      }
+    }
+
+    function normalizeText(text) {
+      return text
+        .replace(/[“”]/g, '"')
+        .replace(/[‘’]/g, "'")
+        .replace(/[°º]/g, "°")
+        .replace(/[，]/g, ",")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function dmsToDecimal(deg, min, sec, direction) {
+      const d = Number(deg) || 0;
+      const m = Number(min) || 0;
+      const s = Number(sec) || 0;
+      let decimal = d + (m / 60) + (s / 3600);
+      if (["S", "W"].includes(String(direction).toUpperCase())) {
+        decimal *= -1;
+      }
+      return decimal;
+    }
+
+    function parseDecimalCoordinates(text) {
+      const cleaned = normalizeText(text);
+      const match = cleaned.match(/(-?\d{1,3}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)/);
+      if (!match) return null;
+
+      const lat = parseFloat(match[1]);
+      const lng = parseFloat(match[2]);
+
+      if (!isValidLatLng(lat, lng)) return null;
+      return { lat, lng, source: "decimal" };
+    }
+
+    function parseDMSCoordinates(text) {
+      const cleaned = normalizeText(text)
+        .replace(/O/g, "0")
+        .replace(/\|/g, "1");
+
+      const patterns = [
+        /([NS])\s*(\d{1,3})\s*[° ]\s*(\d{1,2})\s*[' ]\s*(\d{1,2}(?:\.\d+)?)\s*"?\s*[, ]+\s*([EW])\s*(\d{1,3})\s*[° ]\s*(\d{1,2})\s*[' ]\s*(\d{1,2}(?:\.\d+)?)\s*"?/i,
+        /(\d{1,3})\s*[° ]\s*(\d{1,2})\s*[' ]\s*(\d{1,2}(?:\.\d+)?)\s*"?\s*([NS])\s*[, ]+\s*(\d{1,3})\s*[° ]\s*(\d{1,2})\s*[' ]\s*(\d{1,2}(?:\.\d+)?)\s*"?\s*([EW])/i,
+        /([NS])\s*(\d{1,3})\D+(\d{1,2})\D+(\d{1,2}(?:\.\d+)?)\D+([EW])\s*(\d{1,3})\D+(\d{1,2})\D+(\d{1,2}(?:\.\d+)?)/i
+      ];
+
+      for (const pattern of patterns) {
+        const match = cleaned.match(pattern);
+        if (!match) continue;
+
+        let lat, lng;
+
+        if (pattern === patterns[0] || pattern === patterns[2]) {
+          const latDir = match[1];
+          const latDeg = match[2];
+          const latMin = match[3];
+          const latSec = match[4];
+
+          const lngDir = match[5];
+          const lngDeg = match[6];
+          const lngMin = match[7];
+          const lngSec = match[8];
+
+          lat = dmsToDecimal(latDeg, latMin, latSec, latDir);
+          lng = dmsToDecimal(lngDeg, lngMin, lngSec, lngDir);
+        } else {
+          const latDeg = match[1];
+          const latMin = match[2];
+          const latSec = match[3];
+          const latDir = match[4];
+
+          const lngDeg = match[5];
+          const lngMin = match[6];
+          const lngSec = match[7];
+          const lngDir = match[8];
+
+          lat = dmsToDecimal(latDeg, latMin, latSec, latDir);
+          lng = dmsToDecimal(lngDeg, lngMin, lngSec, lngDir);
+        }
+
+        if (isValidLatLng(lat, lng)) {
+          return { lat, lng, source: "dms" };
+        }
+      }
+
+      return null;
+    }
+
+    function parseCoordinatesFromText(text) {
+      const decimal = parseDecimalCoordinates(text);
+      if (decimal) return decimal;
+
+      const dms = parseDMSCoordinates(text);
+      if (dms) return dms;
+
+      return null;
+    }
+
+    function isValidLatLng(lat, lng) {
+      return (
+        Number.isFinite(lat) &&
+        Number.isFinite(lng) &&
+        lat >= -90 &&
+        lat <= 90 &&
+        lng >= -180 &&
+        lng <= 180
+      );
+    }
+
+    function haversineDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371000;
+      const toRad = (deg) => (deg * Math.PI) / 180;
+
+      const dLat = toRad(lat2 - lat1);
+      const dLon = toRad(lon2 - lon1);
+
+      const a =
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(toRad(lat1)) *
+          Math.cos(toRad(lat2)) *
+          Math.sin(dLon / 2) *
+          Math.sin(dLon / 2);
+
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      return R * c;
+    }
+
+    function formatDistance(meters) {
+      if (!Number.isFinite(meters)) return "--";
+      if (meters < 1000) return `${Math.round(meters)} m`;
+      return `${(meters / 1000).toFixed(2)} km`;
+    }
+
+    function getTravelHint(meters) {
+      if (!Number.isFinite(meters)) return "--";
+
+      const walkingMinutes = Math.max(1, Math.round(meters / 80));
+      const drivingMinutes = Math.max(1, Math.round(meters / 350));
+
+      if (meters < 300) {
+        return `Very close • ~${walkingMinutes} min walk`;
+      }
+
+      if (meters < 3000) {
+        return `~${walkingMinutes} min walk • ~${drivingMinutes} min drive`;
+      }
+
+      return `~${drivingMinutes} min drive`;
+    }
+
+    function openCarLocationInMaps() {
+      if (!carLocation) return;
+      const url = `https://www.google.com/maps?q=${carLocation.lat},${carLocation.lng}`;
+      window.open(url, "_blank");
+    }
+
+    function openNavigationToCar() {
+      if (!carLocation) return;
+      const destination = `${carLocation.lat},${carLocation.lng}`;
+
+      if (myLocation) {
+        const origin = `${myLocation.lat},${myLocation.lng}`;
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+        window.open(url, "_blank");
+        return;
+      }
+
+      const url = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+      window.open(url, "_blank");
+    }
+
+    function openCompareInMaps() {
+      if (!carLocation) return;
+
+      const destination = `${carLocation.lat},${carLocation.lng}`;
+
+      if (myLocation) {
+        const origin = `${myLocation.lat},${myLocation.lng}`;
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&travelmode=driving`;
+        window.open(url, "_blank");
+      } else {
+        const url = `https://www.google.com/maps?q=${destination}`;
+        window.open(url, "_blank");
+      }
+    }
+
+    async function copyCarCoordinates() {
+      if (!carLocation) return;
+      const text = `${carLocation.lat}, ${carLocation.lng}`;
+      try {
+        await navigator.clipboard.writeText(text);
+        setStatus(`Copied car coordinates:\n${text}`, "success");
+      } catch (error) {
+        setStatus(`Could not copy automatically.\nCoordinates: ${text}`, "warn");
+      }
+    }
+
+    function handleImagePreview(file) {
+      const reader = new FileReader();
+      reader.onload = function (event) {
+        previewImage.src = event.target.result;
+        previewImage.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+
+    async function extractTextFromImage(file) {
+      const { data } = await Tesseract.recognize(file, "eng", {
+        logger: (msg) => {
+          if (msg.status === "recognizing text") {
+            const percent = Math.round((msg.progress || 0) * 100);
+            setStatus(`Reading screenshot...\nOCR progress: ${percent}%`, "warn");
+          }
+        }
+      });
+
+      return data.text || "";
+    }
+
+    async function handleExtract() {
+      if (!uploadedImageFile) {
+        setStatus("Please upload a screenshot first.", "error");
+        return;
+      }
+
+      try {
+        extractBtn.disabled = true;
+        setStatus("Starting OCR on your screenshot...", "warn");
+
+        const rawText = await extractTextFromImage(uploadedImageFile);
+        const cleanedText = normalizeText(rawText);
+        ocrText.textContent = cleanedText || "No readable text found.";
+
+        const coords = parseCoordinatesFromText(cleanedText);
+
+        if (!coords) {
+          carLocation = null;
+          updateUI();
+          setStatus(
+            "OCR finished, but I could not confidently detect coordinates.\nPaste the coordinates manually in the input box below and tap 'Use Manual Coordinates'.",
+            "error"
+          );
+          return;
+        }
+
+        carLocation = {
+          lat: coords.lat,
+          lng: coords.lng
+        };
+
+        manualCoords.value = "";
+        updateUI();
+
+        setStatus(
+          `Coordinates extracted successfully.\nSource: ${coords.source.toUpperCase()}\nCar location set to ${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`,
+          "success"
+        );
+      } catch (error) {
+        carLocation = null;
+        updateUI();
+        setStatus(
+          `Failed to extract text from screenshot.\n${error.message || error}`,
+          "error"
+        );
+      } finally {
+        extractBtn.disabled = false;
+      }
+    }
+
+    function handleUseManualCoordinates() {
+      const value = manualCoords.value.trim();
+
+      if (!value) {
+        setStatus("Please paste coordinates into the manual input field first.", "error");
+        return;
+      }
+
+      const coords = parseCoordinatesFromText(value);
+
+      if (!coords) {
+        setStatus(
+          "Could not parse those coordinates.\nUse a format like:\nN25°15'33\" E85°47'57\"\nor\n25.2592, 85.7992",
+          "error"
+        );
+        return;
+      }
+
+      carLocation = {
+        lat: coords.lat,
+        lng: coords.lng
+      };
+
+      updateUI();
+
+      setStatus(
+        `Manual coordinates accepted.\nCar location set to ${coords.lat.toFixed(6)}, ${coords.lng.toFixed(6)}`,
+        "success"
+      );
+    }
+
+    function getMyCurrentLocation() {
+      if (!navigator.geolocation) {
+        setStatus("This browser does not support geolocation.", "error");
+        return;
+      }
+
+      getLocationBtn.disabled = true;
+      setStatus("Fetching your current location...", "warn");
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          myLocation = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+            accuracy: position.coords.accuracy
+          };
+
+          updateUI();
+
+          setStatus(
+            `Your current location was fetched successfully.\nLat: ${myLocation.lat.toFixed(6)}\nLng: ${myLocation.lng.toFixed(6)}`,
+            "success"
+          );
+
+          getLocationBtn.disabled = false;
+        },
+        (error) => {
+          let message = "Could not fetch your current location.";
+
+          switch (error.code) {
+            case error.PERMISSION_DENIED:
+              message = "Location permission denied. Please allow location access in your browser.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              message = "Location information is unavailable right now.";
+              break;
+            case error.TIMEOUT:
+              message = "Location request timed out. Try again.";
+              break;
+          }
+
+          setStatus(message, "error");
+          getLocationBtn.disabled = false;
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 15000,
+          maximumAge: 0
+        }
+      );
+    }
+
+    function clearAll() {
+      uploadedImageFile = null;
+      carLocation = null;
+      myLocation = null;
+      imageInput.value = "";
+      manualCoords.value = "";
+      previewImage.src = "";
+      previewImage.style.display = "none";
+      ocrText.textContent = "No OCR text yet.";
+      setStatus("Cleared. Upload a new screenshot to continue.");
+      updateUI();
+    }
+
+    imageInput.addEventListener("change", (event) => {
+      const file = event.target.files && event.target.files[0];
+      uploadedImageFile = file || null;
+
+      if (!uploadedImageFile) {
+        previewImage.style.display = "none";
+        return;
+      }
+
+      handleImagePreview(uploadedImageFile);
+      setStatus("Screenshot loaded. Now tap 'Extract Coordinates from Screenshot'.");
+    });
+
+    extractBtn.addEventListener("click", handleExtract);
+    useManualBtn.addEventListener("click", handleUseManualCoordinates);
+    getLocationBtn.addEventListener("click", getMyCurrentLocation);
+    clearBtn.addEventListener("click", clearAll);
+
+    openCarMapBtn.addEventListener("click", openCarLocationInMaps);
+    navigateBtn.addEventListener("click", openNavigationToCar);
+    compareBtn.addEventListener("click", openCompareInMaps);
+    copyCoordsBtn.addEventListener("click", copyCarCoordinates);
+
+    updateUI();
+  </script>
+</body>
+</html>
